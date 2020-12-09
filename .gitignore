@@ -1,0 +1,8 @@
+.idea
+log
+serve
+var
+public
+main
+conf/project.config-dev.yaml
+/conf/*.yaml

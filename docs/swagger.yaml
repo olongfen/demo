@@ -1,0 +1,510 @@
+definitions:
+  model_admin.QueryAdminForm:
+    properties:
+      age:
+        $ref: '#/definitions/model_common.FieldData'
+        description: if required, add binding:"required" to tag by self
+      class:
+        $ref: '#/definitions/model_common.FieldData'
+        description: if required, add binding:"required" to tag by self
+      createdAt:
+        $ref: '#/definitions/model_common.FieldData'
+        description: if required, add binding:"required" to tag by self
+      name:
+        $ref: '#/definitions/model_common.FieldData'
+        description: if required, add binding:"required" to tag by self
+      order:
+        items:
+          type: string
+        type: array
+      pageNum:
+        type: integer
+      pageSize:
+        type: integer
+      updatedAt:
+        $ref: '#/definitions/model_common.FieldData'
+        description: if required, add binding:"required" to tag by self
+    required:
+    - pageNum
+    - pageSize
+    type: object
+  model_common.FieldData:
+    properties:
+      symbol:
+        type: string
+      value:
+        type: object
+    type: object
+  model_user.QueryUserForm:
+    properties:
+      age:
+        $ref: '#/definitions/model_common.FieldData'
+        description: if required, add binding:"required" to tag by self
+      class:
+        $ref: '#/definitions/model_common.FieldData'
+        description: if required, add binding:"required" to tag by self
+      createdAt:
+        $ref: '#/definitions/model_common.FieldData'
+        description: if required, add binding:"required" to tag by self
+      name:
+        $ref: '#/definitions/model_common.FieldData'
+        description: if required, add binding:"required" to tag by self
+      order:
+        items:
+          type: string
+        type: array
+      pageNum:
+        type: integer
+      pageSize:
+        type: integer
+      updatedAt:
+        $ref: '#/definitions/model_common.FieldData'
+        description: if required, add binding:"required" to tag by self
+    required:
+    - pageNum
+    - pageSize
+    type: object
+  response.Meta:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+  response.Response:
+    properties:
+      data:
+        type: object
+      meta:
+        $ref: '#/definitions/response.Meta'
+    type: object
+  srv_admin.AddAdminReqForm:
+    properties:
+      age:
+        description: if required, add binding:"required" to tag by self
+        type: integer
+      class:
+        description: if required, add binding:"required" to tag by self
+        type: string
+      name:
+        description: if required, add binding:"required" to tag by self
+        type: string
+    type: object
+  srv_admin.EditAdminReqForm:
+    properties:
+      age:
+        description: if required, add binding:"required" to tag by self
+        type: integer
+      class:
+        description: if required, add binding:"required" to tag by self
+        type: string
+      id:
+        type: integer
+      name:
+        description: if required, add binding:"required" to tag by self
+        type: string
+    required:
+    - id
+    type: object
+  srv_user.AddUserReqForm:
+    properties:
+      age:
+        description: if required, add binding:"required" to tag by self
+        type: integer
+      class:
+        description: if required, add binding:"required" to tag by self
+        type: string
+      name:
+        description: if required, add binding:"required" to tag by self
+        type: string
+    type: object
+  srv_user.EditUserReqForm:
+    properties:
+      age:
+        description: if required, add binding:"required" to tag by self
+        type: integer
+      class:
+        description: if required, add binding:"required" to tag by self
+        type: string
+      id:
+        type: integer
+      name:
+        description: if required, add binding:"required" to tag by self
+        type: string
+    required:
+    - id
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/admin/add:
+    post:
+      consumes:
+      - application/json
+      description: add Admin one record
+      parameters:
+      - description: 添加Admin表单
+        in: body
+        name: '{}'
+        required: true
+        schema:
+          $ref: '#/definitions/srv_admin.AddAdminReqForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: add Admin one record
+      tags:
+      - Admin
+  /api/v1/admin/addList:
+    post:
+      consumes:
+      - application/json
+      description: add Admin list record
+      parameters:
+      - description: 添加Admin表单列表
+        in: body
+        name: '{}'
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/srv_admin.AddAdminReqForm'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: add Admin list record
+      tags:
+      - Admin
+  /api/v1/admin/delete:
+    delete:
+      consumes:
+      - application/json
+      description: delete Admin one record
+      parameters:
+      - description: Admin ID
+        in: body
+        name: id
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: delete Admin one record
+      tags:
+      - Admin
+  /api/v1/admin/deleteList:
+    delete:
+      consumes:
+      - application/json
+      description: delete Admin list record
+      parameters:
+      - description: Admin ID list
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: delete Admin list record
+      tags:
+      - Admin
+  /api/v1/admin/edit:
+    put:
+      consumes:
+      - application/json
+      description: edit Admin one record
+      parameters:
+      - description: 编辑Admin表单
+        in: body
+        name: '{}'
+        required: true
+        schema:
+          $ref: '#/definitions/srv_admin.EditAdminReqForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: edit Admin one record
+      tags:
+      - Admin
+  /api/v1/admin/get:
+    get:
+      consumes:
+      - application/json
+      description: get Admin one record
+      parameters:
+      - description: Admin ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: get Admin one record
+      tags:
+      - Admin
+  /api/v1/admin/list:
+    get:
+      consumes:
+      - application/json
+      description: get Admin list record
+      parameters:
+      - description: 获取Admin列表form
+        in: body
+        name: '{}'
+        required: true
+        schema:
+          $ref: '#/definitions/model_admin.QueryAdminForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: get Admin list record
+      tags:
+      - Admin
+  /api/v1/user/add:
+    post:
+      consumes:
+      - application/json
+      description: add User one record
+      parameters:
+      - description: 添加User表单
+        in: body
+        name: '{}'
+        required: true
+        schema:
+          $ref: '#/definitions/srv_user.AddUserReqForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: add User one record
+      tags:
+      - User
+  /api/v1/user/addList:
+    post:
+      consumes:
+      - application/json
+      description: add User list record
+      parameters:
+      - description: 添加User表单列表
+        in: body
+        name: '{}'
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/srv_user.AddUserReqForm'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: add User list record
+      tags:
+      - User
+  /api/v1/user/delete:
+    delete:
+      consumes:
+      - application/json
+      description: delete User one record
+      parameters:
+      - description: User ID
+        in: body
+        name: id
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: delete User one record
+      tags:
+      - User
+  /api/v1/user/deleteList:
+    delete:
+      consumes:
+      - application/json
+      description: delete User list record
+      parameters:
+      - description: User ID list
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: delete User list record
+      tags:
+      - User
+  /api/v1/user/edit:
+    put:
+      consumes:
+      - application/json
+      description: edit User one record
+      parameters:
+      - description: 编辑User表单
+        in: body
+        name: '{}'
+        required: true
+        schema:
+          $ref: '#/definitions/srv_user.EditUserReqForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: edit User one record
+      tags:
+      - User
+  /api/v1/user/get:
+    get:
+      consumes:
+      - application/json
+      description: get User one record
+      parameters:
+      - description: User ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: get User one record
+      tags:
+      - User
+  /api/v1/user/list:
+    get:
+      consumes:
+      - application/json
+      description: get User list record
+      parameters:
+      - description: 获取User列表form
+        in: body
+        name: '{}'
+        required: true
+        schema:
+          $ref: '#/definitions/model_user.QueryUserForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: get User list record
+      tags:
+      - User
+swagger: "2.0"
