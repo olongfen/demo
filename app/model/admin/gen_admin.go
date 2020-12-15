@@ -28,8 +28,8 @@ func NewAdmin() *Admin {
 }
 
 // Add add one record
-func (t *Admin) Add(db *gorm.DB) (err error) {
-	if err = db.Create(t).Error; err != nil {
+func (t *Admin) Add(dbs ...*gorm.DB) (err error) {
+	if err = model_common.GetDB(dbs...).Create(t).Error; err != nil {
 		model_common.ModelLog.Errorln(err)
 		err = ErrCreateAdmin
 		return
@@ -38,8 +38,8 @@ func (t *Admin) Add(db *gorm.DB) (err error) {
 }
 
 // Delete delete record
-func (t *Admin) Delete(db *gorm.DB) (err error) {
-	if err = db.Delete(t).Error; err != nil {
+func (t *Admin) Delete(dbs ...*gorm.DB) (err error) {
+	if err = model_common.GetDB(dbs...).Delete(t).Error; err != nil {
 		err = ErrDeleteAdmin
 		return
 	}
@@ -47,8 +47,8 @@ func (t *Admin) Delete(db *gorm.DB) (err error) {
 }
 
 // Updates update record
-func (t *Admin) Updates(db *gorm.DB, m map[string]interface{}) (err error) {
-	if err = db.Model(t).Where("id = ?", t.ID).Updates(m).Error; err != nil {
+func (t *Admin) Updates(m map[string]interface{}, dbs ...*gorm.DB) (err error) {
+	if err = model_common.GetDB(dbs...).Model(t).Where("id = ?", t.ID).Updates(m).Error; err != nil {
 		model_common.ModelLog.Errorln(err)
 		err = ErrUpdateAdmin
 		return
@@ -57,8 +57,8 @@ func (t *Admin) Updates(db *gorm.DB, m map[string]interface{}) (err error) {
 }
 
 // GetAdminAll get all record
-func GetAdminAll(db *gorm.DB) (ret []*Admin, err error) {
-	if err = db.Find(&ret).Error; err != nil {
+func GetAdminAll(dbs ...*gorm.DB) (ret []*Admin, err error) {
+	if err = model_common.GetDB(dbs...).Find(&ret).Error; err != nil {
 		model_common.ModelLog.Errorln(err)
 		err = ErrGetAdmin
 		return
@@ -67,14 +67,14 @@ func GetAdminAll(db *gorm.DB) (ret []*Admin, err error) {
 }
 
 // GetAdminCount get count
-func GetAdminCount(db *gorm.DB) (ret int64) {
-	db.Model(&Admin{}).Count(&ret)
+func GetAdminCount(dbs ...*gorm.DB) (ret int64) {
+	model_common.GetDB(dbs...).Model(&Admin{}).Count(&ret)
 	return
 }
 
 // DeleteAdminBatch delete Admin batch
-func DeleteAdminBatch(db *gorm.DB, ids []string) (err error) {
-	if err = db.Model(&Admin{}).Delete("id in ?", ids).Error; err != nil {
+func DeleteAdminBatch(ids []string, dbs ...*gorm.DB) (err error) {
+	if err = model_common.GetDB(dbs...).Model(&Admin{}).Delete("id in ?", ids).Error; err != nil {
 		model_common.ModelLog.Errorln(err)
 		err = ErrDeleteAdmin
 		return
@@ -83,8 +83,8 @@ func DeleteAdminBatch(db *gorm.DB, ids []string) (err error) {
 }
 
 // AddAdminBatch add Admin batch
-func AddAdminBatch(db *gorm.DB, datas []*Admin) (err error) {
-	if err = db.Model(&Admin{}).Create(datas).Error; err != nil {
+func AddAdminBatch(datas []*Admin, dbs ...*gorm.DB) (err error) {
+	if err = model_common.GetDB(dbs...).Model(&Admin{}).Create(datas).Error; err != nil {
 		model_common.ModelLog.Errorln(err)
 		err = ErrCreateAdmin
 		return
@@ -106,7 +106,10 @@ type QueryAdminForm struct {
 }
 
 // GetAdminList get Admin list some field value or some condition
-func GetAdminList(db *gorm.DB, q *QueryAdminForm) (ret []*Admin, err error) {
+func GetAdminList(q *QueryAdminForm, dbs ...*gorm.DB) (ret []*Admin, err error) {
+	var (
+		db = model_common.GetDB(dbs...)
+	)
 	// order
 	if len(q.Order) > 0 {
 		for _, v := range q.Order {
@@ -150,8 +153,8 @@ func (t *Admin) SetQueryByID(id uint) *Admin {
 }
 
 // GetByID get one record by ID
-func (t *Admin) GetByID(db *gorm.DB) (err error) {
-	if err = db.First(t, "id = ?", t.ID).Error; err != nil {
+func (t *Admin) GetByID(dbs ...*gorm.DB) (err error) {
+	if err = model_common.GetDB(dbs...).First(t, "id = ?", t.ID).Error; err != nil {
 		model_common.ModelLog.Errorln(err)
 		err = ErrGetAdmin
 		return
@@ -160,8 +163,8 @@ func (t *Admin) GetByID(db *gorm.DB) (err error) {
 }
 
 // DeleteByID delete record by ID
-func (t *Admin) DeleteByID(db *gorm.DB) (err error) {
-	if err = db.Delete(t, "id = ?", t.ID).Error; err != nil {
+func (t *Admin) DeleteByID(dbs ...*gorm.DB) (err error) {
+	if err = model_common.GetDB(dbs...).Delete(t, "id = ?", t.ID).Error; err != nil {
 		model_common.ModelLog.Errorln(err)
 		err = ErrDeleteAdmin
 		return

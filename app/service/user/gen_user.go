@@ -2,7 +2,6 @@ package srv_user
 
 import (
 	"github.com/mitchellh/mapstructure"
-	"github.com/olongfen/demo/app/model/common"
 	"github.com/olongfen/demo/app/model/user"
 	"strconv"
 )
@@ -57,7 +56,7 @@ func AddUserOne(req *AddUserReqForm) (ret *model_user.User, err error) {
 	}
 	// if needed todo add you business logic code
 
-	if err = data.Add(model_common.DB); err != nil {
+	if err = data.Add(); err != nil {
 		return
 	}
 
@@ -77,7 +76,7 @@ func AddUserBatch(req UserBatchForm) (ret []*model_user.User, err error) {
 		return
 	}
 	// if needed todo add you business logic code
-	if err = model_user.AddUserBatch(model_common.DB, datas); err != nil {
+	if err = model_user.AddUserBatch(datas); err != nil {
 		return
 	}
 	//
@@ -95,7 +94,7 @@ func EditUserOne(req *EditUserReqForm) (ret *model_user.User, err error) {
 	)
 	// if needed todo add you business logic code code
 
-	if err = data.SetQueryByID(uint(req.ID)).Updates(model_common.DB, req.ToMAP()); err != nil {
+	if err = data.SetQueryByID(uint(req.ID)).Updates(req.ToMAP()); err != nil {
 		return
 	}
 
@@ -111,7 +110,7 @@ func GetUserPage(req *model_user.QueryUserForm) (ret []*model_user.User, err err
 	)
 	// if needed todo add you business logic code code
 
-	if datas, err = model_user.GetUserList(model_common.DB, req); err != nil {
+	if datas, err = model_user.GetUserList(req); err != nil {
 		return
 	}
 
@@ -126,7 +125,7 @@ func GetUserOne(in string) (ret *model_user.User, err error) {
 		id, _ = strconv.Atoi(in)
 		d     = model_user.NewUser().SetQueryByID(uint(id))
 	)
-	if err = d.GetByID(model_common.DB); err != nil {
+	if err = d.GetByID(); err != nil {
 		return
 	}
 
@@ -142,11 +141,11 @@ func DeleteUserOne(in string) (err error) {
 		d     = model_user.NewUser().SetQueryByID(uint(id))
 	)
 	// if needed todo add you business logic code
-	return d.DeleteByID(model_common.DB)
+	return d.DeleteByID()
 }
 
 // DeleteUserBatch delete User
 func DeleteUserBatch(ids []string) (err error) {
 	// if needed todo add you business logic code
-	return model_user.DeleteUserBatch(model_common.DB, ids)
+	return model_user.DeleteUserBatch(ids)
 }

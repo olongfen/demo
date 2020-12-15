@@ -689,20 +689,19 @@ var doc = `{
         },
         "response.Meta": {
             "type": "object",
-            "properties": {
-                "code": {
-                    "type": "integer"
-                },
-                "message": {
-                    "type": "string"
-                }
-            }
+            "additionalProperties": true
         },
         "response.Response": {
             "type": "object",
             "properties": {
+                "code": {
+                    "type": "integer"
+                },
                 "data": {
                     "type": "object"
+                },
+                "message": {
+                    "type": "string"
                 },
                 "meta": {
                     "$ref": "#/definitions/response.Meta"

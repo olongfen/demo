@@ -28,8 +28,8 @@ func NewUser() *User {
 }
 
 // Add add one record
-func (t *User) Add(db *gorm.DB) (err error) {
-	if err = db.Create(t).Error; err != nil {
+func (t *User) Add(dbs ...*gorm.DB) (err error) {
+	if err = model_common.GetDB(dbs...).Create(t).Error; err != nil {
 		model_common.ModelLog.Errorln(err)
 		err = ErrCreateUser
 		return
@@ -38,8 +38,8 @@ func (t *User) Add(db *gorm.DB) (err error) {
 }
 
 // Delete delete record
-func (t *User) Delete(db *gorm.DB) (err error) {
-	if err = db.Delete(t).Error; err != nil {
+func (t *User) Delete(dbs ...*gorm.DB) (err error) {
+	if err = model_common.GetDB(dbs...).Delete(t).Error; err != nil {
 		err = ErrDeleteUser
 		return
 	}
@@ -47,8 +47,8 @@ func (t *User) Delete(db *gorm.DB) (err error) {
 }
 
 // Updates update record
-func (t *User) Updates(db *gorm.DB, m map[string]interface{}) (err error) {
-	if err = db.Model(t).Where("id = ?", t.ID).Updates(m).Error; err != nil {
+func (t *User) Updates(m map[string]interface{}, dbs ...*gorm.DB) (err error) {
+	if err = model_common.GetDB(dbs...).Model(t).Where("id = ?", t.ID).Updates(m).Error; err != nil {
 		model_common.ModelLog.Errorln(err)
 		err = ErrUpdateUser
 		return
@@ -57,8 +57,8 @@ func (t *User) Updates(db *gorm.DB, m map[string]interface{}) (err error) {
 }
 
 // GetUserAll get all record
-func GetUserAll(db *gorm.DB) (ret []*User, err error) {
-	if err = db.Find(&ret).Error; err != nil {
+func GetUserAll(dbs ...*gorm.DB) (ret []*User, err error) {
+	if err = model_common.GetDB(dbs...).Find(&ret).Error; err != nil {
 		model_common.ModelLog.Errorln(err)
 		err = ErrGetUser
 		return
@@ -67,14 +67,14 @@ func GetUserAll(db *gorm.DB) (ret []*User, err error) {
 }
 
 // GetUserCount get count
-func GetUserCount(db *gorm.DB) (ret int64) {
-	db.Model(&User{}).Count(&ret)
+func GetUserCount(dbs ...*gorm.DB) (ret int64) {
+	model_common.GetDB(dbs...).Model(&User{}).Count(&ret)
 	return
 }
 
 // DeleteUserBatch delete User batch
-func DeleteUserBatch(db *gorm.DB, ids []string) (err error) {
-	if err = db.Model(&User{}).Delete("id in ?", ids).Error; err != nil {
+func DeleteUserBatch(ids []string, dbs ...*gorm.DB) (err error) {
+	if err = model_common.GetDB(dbs...).Model(&User{}).Delete("id in ?", ids).Error; err != nil {
 		model_common.ModelLog.Errorln(err)
 		err = ErrDeleteUser
 		return
@@ -83,8 +83,8 @@ func DeleteUserBatch(db *gorm.DB, ids []string) (err error) {
 }
 
 // AddUserBatch add User batch
-func AddUserBatch(db *gorm.DB, datas []*User) (err error) {
-	if err = db.Model(&User{}).Create(datas).Error; err != nil {
+func AddUserBatch(datas []*User, dbs ...*gorm.DB) (err error) {
+	if err = model_common.GetDB(dbs...).Model(&User{}).Create(datas).Error; err != nil {
 		model_common.ModelLog.Errorln(err)
 		err = ErrCreateUser
 		return
@@ -106,7 +106,10 @@ type QueryUserForm struct {
 }
 
 // GetUserList get User list some field value or some condition
-func GetUserList(db *gorm.DB, q *QueryUserForm) (ret []*User, err error) {
+func GetUserList(q *QueryUserForm, dbs ...*gorm.DB) (ret []*User, err error) {
+	var (
+		db = model_common.GetDB(dbs...)
+	)
 	// order
 	if len(q.Order) > 0 {
 		for _, v := range q.Order {
@@ -150,8 +153,8 @@ func (t *User) SetQueryByID(id uint) *User {
 }
 
 // GetByID get one record by ID
-func (t *User) GetByID(db *gorm.DB) (err error) {
-	if err = db.First(t, "id = ?", t.ID).Error; err != nil {
+func (t *User) GetByID(dbs ...*gorm.DB) (err error) {
+	if err = model_common.GetDB(dbs...).First(t, "id = ?", t.ID).Error; err != nil {
 		model_common.ModelLog.Errorln(err)
 		err = ErrGetUser
 		return
@@ -160,8 +163,8 @@ func (t *User) GetByID(db *gorm.DB) (err error) {
 }
 
 // DeleteByID delete record by ID
-func (t *User) DeleteByID(db *gorm.DB) (err error) {
-	if err = db.Delete(t, "id = ?", t.ID).Error; err != nil {
+func (t *User) DeleteByID(dbs ...*gorm.DB) (err error) {
+	if err = model_common.GetDB(dbs...).Delete(t, "id = ?", t.ID).Error; err != nil {
 		model_common.ModelLog.Errorln(err)
 		err = ErrDeleteUser
 		return

@@ -14,3 +14,10 @@ var (
 	ModelLog *log.Logger
 	DB       *gorm.DB
 )
+
+func GetDB(dbs ...*gorm.DB) (ret *gorm.DB) {
+	if len(dbs) > 0 {
+		return dbs[0]
+	}
+	return DB
+}

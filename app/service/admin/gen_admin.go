@@ -3,7 +3,6 @@ package srv_admin
 import (
 	"github.com/mitchellh/mapstructure"
 	"github.com/olongfen/demo/app/model/admin"
-	"github.com/olongfen/demo/app/model/common"
 	"strconv"
 )
 
@@ -57,7 +56,7 @@ func AddAdminOne(req *AddAdminReqForm) (ret *model_admin.Admin, err error) {
 	}
 	// if needed todo add you business logic code
 
-	if err = data.Add(model_common.DB); err != nil {
+	if err = data.Add(); err != nil {
 		return
 	}
 
@@ -77,7 +76,7 @@ func AddAdminBatch(req AdminBatchForm) (ret []*model_admin.Admin, err error) {
 		return
 	}
 	// if needed todo add you business logic code
-	if err = model_admin.AddAdminBatch(model_common.DB, datas); err != nil {
+	if err = model_admin.AddAdminBatch(datas); err != nil {
 		return
 	}
 	//
@@ -95,7 +94,7 @@ func EditAdminOne(req *EditAdminReqForm) (ret *model_admin.Admin, err error) {
 	)
 	// if needed todo add you business logic code code
 
-	if err = data.SetQueryByID(uint(req.ID)).Updates(model_common.DB, req.ToMAP()); err != nil {
+	if err = data.SetQueryByID(uint(req.ID)).Updates(req.ToMAP()); err != nil {
 		return
 	}
 
@@ -111,7 +110,7 @@ func GetAdminPage(req *model_admin.QueryAdminForm) (ret []*model_admin.Admin, er
 	)
 	// if needed todo add you business logic code code
 
-	if datas, err = model_admin.GetAdminList(model_common.DB, req); err != nil {
+	if datas, err = model_admin.GetAdminList(req); err != nil {
 		return
 	}
 
@@ -126,7 +125,7 @@ func GetAdminOne(in string) (ret *model_admin.Admin, err error) {
 		id, _ = strconv.Atoi(in)
 		d     = model_admin.NewAdmin().SetQueryByID(uint(id))
 	)
-	if err = d.GetByID(model_common.DB); err != nil {
+	if err = d.GetByID(); err != nil {
 		return
 	}
 
@@ -142,11 +141,11 @@ func DeleteAdminOne(in string) (err error) {
 		d     = model_admin.NewAdmin().SetQueryByID(uint(id))
 	)
 	// if needed todo add you business logic code
-	return d.DeleteByID(model_common.DB)
+	return d.DeleteByID()
 }
 
 // DeleteAdminBatch delete Admin
 func DeleteAdminBatch(ids []string) (err error) {
 	// if needed todo add you business logic code
-	return model_admin.DeleteAdminBatch(model_common.DB, ids)
+	return model_admin.DeleteAdminBatch(ids)
 }

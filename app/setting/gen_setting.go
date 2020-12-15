@@ -17,11 +17,6 @@ type Settings struct {
 	Project  Project
 }
 
-type TLS struct {
-	Cert string
-	Key  string
-}
-
 // Project project config
 type Project struct {
 }
@@ -34,6 +29,11 @@ type Serve struct {
 	TLS        TLS
 }
 
+type TLS struct {
+	Cert string
+	Key  string
+}
+
 // Database database config
 type Database struct {
 	Host         string
@@ -42,9 +42,9 @@ type Database struct {
 	DatabaseName string
 	Username     string
 	Password     string
-	Source       string
 	MaxIdleConn  int
 	MaxOpenConn  int
+	Source       string
 }
 
 // FilePath file save path

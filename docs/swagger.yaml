@@ -65,16 +65,16 @@ definitions:
     - pageSize
     type: object
   response.Meta:
-    properties:
-      code:
-        type: integer
-      message:
-        type: string
+    additionalProperties: true
     type: object
   response.Response:
     properties:
+      code:
+        type: integer
       data:
         type: object
+      message:
+        type: string
       meta:
         $ref: '#/definitions/response.Meta'
     type: object
