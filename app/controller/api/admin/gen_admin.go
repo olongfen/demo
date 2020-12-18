@@ -147,7 +147,7 @@ func (ct *CtrlAdmin) GetOne(c *gin.Context) {
 // @Description get Admin list record
 // @Accept json
 // @Produce json
-// @Param {} body model_admin.QueryAdminForm true "获取Admin列表form"
+// @Param {} query model_admin.QueryAdminForm true "获取Admin列表form"
 // @Success 200  {object} response.Response
 // @Failure 500  {object} response.Response
 // @router /api/v1/admin/list  [get]

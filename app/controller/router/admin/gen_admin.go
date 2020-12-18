@@ -3,6 +3,7 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/olongfen/demo/app/controller/api/admin"
+	"github.com/olongfen/demo/app/controller/common"
 )
 
 func initAdmin(r *gin.RouterGroup) {
@@ -15,4 +16,8 @@ func initAdmin(r *gin.RouterGroup) {
 	admin.PUT("edit", c.Edit)
 	admin.DELETE("delete", c.DeleteOne)
 	admin.DELETE("deleteList", c.DeleteList)
+}
+
+func init() {
+	ctrl_common.RouterGroupFunctions = append(ctrl_common.RouterGroupFunctions, initAdmin)
 }

@@ -12,10 +12,9 @@ import (
 	"github.com/olongfen/contrib/log"
 	"github.com/sirupsen/logrus"
 
-	"github.com/olongfen/demo/app/controller/router"
-	_ "github.com/olongfen/demo/app/controller/router"
-	_ "github.com/olongfen/demo/app/model/initdb"
-
+	"github.com/olongfen/demo/app/controller/router/init_router"
+	_ "github.com/olongfen/demo/app/controller/router/init_router"
+	_ "github.com/olongfen/demo/app/model/init_db"
 	"github.com/olongfen/demo/app/setting"
 	_ "github.com/olongfen/demo/app/setting"
 	_ "github.com/olongfen/demo/docs"

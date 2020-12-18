@@ -13,6 +13,7 @@ type FieldData struct {
 var (
 	ModelLog *log.Logger
 	DB       *gorm.DB
+	Tables   []interface{}
 )
 
 func GetDB(dbs ...*gorm.DB) (ret *gorm.DB) {

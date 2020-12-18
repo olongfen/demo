@@ -4,9 +4,10 @@ import (
 	"fmt"
 
 	"github.com/olongfen/contrib/log"
-	"github.com/olongfen/demo/app/model/admin"
+	_ "github.com/olongfen/demo/app/model/admin"
 	"github.com/olongfen/demo/app/model/common"
-	"github.com/olongfen/demo/app/model/user"
+	_ "github.com/olongfen/demo/app/model/region"
+	_ "github.com/olongfen/demo/app/model/user"
 	"github.com/olongfen/demo/app/setting"
 	"github.com/sirupsen/logrus"
 	"gorm.io/driver/clickhouse"
@@ -21,11 +22,10 @@ import (
 func init() {
 	var (
 		err            error
-		tables         []interface{}
 		dataSourceName string
 		dialector      gorm.Dialector
 	)
-	model_common.ModelLog = log.NewLogFile(log.ParamLog{Path: setting.Global.FilePath.LogDir + "/" + "models", Stdout: !setting.DevEnv, P: setting.Global.FilePath.LogPatent})
+	model_common.ModelLog = log.NewLogFile(log.ParamLog{Path: setting.Global.FilePath.LogDir + "/" + "models", Stdout: setting.DevEnv, P: setting.Global.FilePath.LogPatent})
 	switch setting.Global.DB.Driver {
 	case "postgres":
 		dataSourceName = fmt.Sprintf("user=%s password=%s host=%s port=%s dbname=%s sslmode=disable", setting.Global.DB.Username,
@@ -57,14 +57,10 @@ func init() {
 	}
 	if setting.DevEnv {
 		model_common.DB = model_common.DB.Debug()
-	}
-	tables = append(tables, &model_user.User{})
-
-	tables = append(tables, &model_admin.Admin{})
-
-	err = model_common.DB.AutoMigrate(tables...)
-	if err != nil {
-		panic(err)
+		err = model_common.DB.AutoMigrate(model_common.Tables...)
+		if err != nil {
+			panic(err)
+		}
 	}
 
 	log.Infoln("database init success !")

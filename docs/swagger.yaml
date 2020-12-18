@@ -1,68 +1,10 @@
 definitions:
-  model_admin.QueryAdminForm:
-    properties:
-      age:
-        $ref: '#/definitions/model_common.FieldData'
-        description: if required, add binding:"required" to tag by self
-      class:
-        $ref: '#/definitions/model_common.FieldData'
-        description: if required, add binding:"required" to tag by self
-      createdAt:
-        $ref: '#/definitions/model_common.FieldData'
-        description: if required, add binding:"required" to tag by self
-      name:
-        $ref: '#/definitions/model_common.FieldData'
-        description: if required, add binding:"required" to tag by self
-      order:
-        items:
-          type: string
-        type: array
-      pageNum:
-        type: integer
-      pageSize:
-        type: integer
-      updatedAt:
-        $ref: '#/definitions/model_common.FieldData'
-        description: if required, add binding:"required" to tag by self
-    required:
-    - pageNum
-    - pageSize
-    type: object
   model_common.FieldData:
     properties:
       symbol:
         type: string
       value:
         type: object
-    type: object
-  model_user.QueryUserForm:
-    properties:
-      age:
-        $ref: '#/definitions/model_common.FieldData'
-        description: if required, add binding:"required" to tag by self
-      class:
-        $ref: '#/definitions/model_common.FieldData'
-        description: if required, add binding:"required" to tag by self
-      createdAt:
-        $ref: '#/definitions/model_common.FieldData'
-        description: if required, add binding:"required" to tag by self
-      name:
-        $ref: '#/definitions/model_common.FieldData'
-        description: if required, add binding:"required" to tag by self
-      order:
-        items:
-          type: string
-        type: array
-      pageNum:
-        type: integer
-      pageSize:
-        type: integer
-      updatedAt:
-        $ref: '#/definitions/model_common.FieldData'
-        description: if required, add binding:"required" to tag by self
-    required:
-    - pageNum
-    - pageSize
     type: object
   response.Meta:
     additionalProperties: true
@@ -100,6 +42,46 @@ definitions:
         type: string
       id:
         type: integer
+      name:
+        description: if required, add binding:"required" to tag by self
+        type: string
+    required:
+    - id
+    type: object
+  srv_region.AddRegionReqForm:
+    properties:
+      cname:
+        description: if required, add binding:"required" to tag by self
+        type: string
+      latitude:
+        description: if required, add binding:"required" to tag by self
+        type: string
+      longitude:
+        description: if required, add binding:"required" to tag by self
+        type: string
+      lowerName:
+        description: if required, add binding:"required" to tag by self
+        type: string
+      name:
+        description: if required, add binding:"required" to tag by self
+        type: string
+    type: object
+  srv_region.EditRegionReqForm:
+    properties:
+      cname:
+        description: if required, add binding:"required" to tag by self
+        type: string
+      id:
+        type: integer
+      latitude:
+        description: if required, add binding:"required" to tag by self
+        type: string
+      longitude:
+        description: if required, add binding:"required" to tag by self
+        type: string
+      lowerName:
+        description: if required, add binding:"required" to tag by self
+        type: string
       name:
         description: if required, add binding:"required" to tag by self
         type: string
@@ -302,12 +284,27 @@ paths:
       - application/json
       description: get Admin list record
       parameters:
-      - description: 获取Admin列表form
-        in: body
-        name: '{}'
+      - description: if required, add binding:"required" to tag by self
+        in: query
+        name: class
+        type: string
+      - description: if required, add binding:"required" to tag by self
+        in: query
+        name: name
+        type: string
+      - in: query
+        items:
+          type: string
+        name: order
+        type: array
+      - in: query
+        name: pageNum
         required: true
-        schema:
-          $ref: '#/definitions/model_admin.QueryAdminForm'
+        type: integer
+      - in: query
+        name: pageSize
+        required: true
+        type: integer
       produces:
       - application/json
       responses:
@@ -322,6 +319,218 @@ paths:
       summary: get Admin list record
       tags:
       - Admin
+  /api/v1/region/add:
+    post:
+      consumes:
+      - application/json
+      description: add Region one record
+      parameters:
+      - description: 添加Region表单
+        in: body
+        name: '{}'
+        required: true
+        schema:
+          $ref: '#/definitions/srv_region.AddRegionReqForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: add Region one record
+      tags:
+      - Region
+  /api/v1/region/addList:
+    post:
+      consumes:
+      - application/json
+      description: add Region list record
+      parameters:
+      - description: 添加Region表单列表
+        in: body
+        name: '{}'
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/srv_region.AddRegionReqForm'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: add Region list record
+      tags:
+      - Region
+  /api/v1/region/delete:
+    delete:
+      consumes:
+      - application/json
+      description: delete Region one record
+      parameters:
+      - description: Region ID
+        in: body
+        name: id
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: delete Region one record
+      tags:
+      - Region
+  /api/v1/region/deleteList:
+    delete:
+      consumes:
+      - application/json
+      description: delete Region list record
+      parameters:
+      - description: Region ID list
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: delete Region list record
+      tags:
+      - Region
+  /api/v1/region/edit:
+    put:
+      consumes:
+      - application/json
+      description: edit Region one record
+      parameters:
+      - description: 编辑Region表单
+        in: body
+        name: '{}'
+        required: true
+        schema:
+          $ref: '#/definitions/srv_region.EditRegionReqForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: edit Region one record
+      tags:
+      - Region
+  /api/v1/region/get:
+    get:
+      consumes:
+      - application/json
+      description: get Region one record
+      parameters:
+      - description: Region ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: get Region one record
+      tags:
+      - Region
+  /api/v1/region/list:
+    get:
+      consumes:
+      - application/json
+      description: get Region list record
+      parameters:
+      - description: if required, add binding:"required" to tag by self
+        in: query
+        name: cname
+        type: string
+      - description: if required, add binding:"required" to tag by self
+        in: query
+        name: latitude
+        type: string
+      - description: if required, add binding:"required" to tag by self
+        in: query
+        name: longitude
+        type: string
+      - description: if required, add binding:"required" to tag by self
+        in: query
+        name: lowerName
+        type: string
+      - description: if required, add binding:"required" to tag by self
+        in: query
+        name: name
+        type: string
+      - in: query
+        items:
+          type: string
+        name: order
+        type: array
+      - in: query
+        name: pageNum
+        required: true
+        type: integer
+      - in: query
+        name: pageSize
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: get Region list record
+      tags:
+      - Region
   /api/v1/user/add:
     post:
       consumes:
@@ -487,12 +696,23 @@ paths:
       - application/json
       description: get User list record
       parameters:
-      - description: 获取User列表form
-        in: body
-        name: '{}'
+      - description: if required, add binding:"required" to tag by self
+        in: query
+        name: class
+        type: string
+      - in: query
+        items:
+          type: string
+        name: order
+        type: array
+      - in: query
+        name: pageNum
         required: true
-        schema:
-          $ref: '#/definitions/model_user.QueryUserForm'
+        type: integer
+      - in: query
+        name: pageSize
+        required: true
+        type: integer
       produces:
       - application/json
       responses:

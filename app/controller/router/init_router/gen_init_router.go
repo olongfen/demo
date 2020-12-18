@@ -7,11 +7,14 @@ import (
 	"github.com/gin-gonic/gin"
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/olongfen/contrib/log"
+	"github.com/olongfen/demo/app/controller/common"
+	"github.com/olongfen/demo/app/controller/middleware"
+	_ "github.com/olongfen/demo/app/controller/router/admin"
+	_ "github.com/olongfen/demo/app/controller/router/region"
+	_ "github.com/olongfen/demo/app/controller/router/user"
+	"github.com/olongfen/demo/app/setting"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
-
-	"github.com/olongfen/demo/app/controller/middleware"
-	"github.com/olongfen/demo/app/setting"
 )
 
 // 初始化路由
@@ -51,10 +54,10 @@ func init() {
 		api.GET("/ping", func(c *gin.Context) {
 			c.JSON(http.StatusOK, gin.H{"ping": "pong >>>>>>> update"})
 		})
-		// User router
-		initUser(api)
-		// Admin router
-		initAdmin(api)
+		for _, v := range ctrl_common.RouterGroupFunctions {
+			v(api)
+		}
+
 	}
 	log.Infoln("router init success !")
 }

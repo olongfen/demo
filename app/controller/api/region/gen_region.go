@@ -1,28 +1,28 @@
-package api_user
+package api_region
 
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/olongfen/demo/app/controller/response"
-	"github.com/olongfen/demo/app/model/user"
-	"github.com/olongfen/demo/app/service/user"
+	"github.com/olongfen/demo/app/model/region"
+	"github.com/olongfen/demo/app/service/region"
 )
 
-// CtrlUser
-type CtrlUser struct{}
+// CtrlRegion
+type CtrlRegion struct{}
 
-// AddOne add User one record
-// @tags User
-// @Summary add User one record
-// @Description add User one record
+// AddOne add Region one record
+// @tags Region
+// @Summary add Region one record
+// @Description add Region one record
 // @Accept json
 // @Produce json
-// @Param {} body srv_user.AddUserReqForm true "添加User表单"
+// @Param {} body srv_region.AddRegionReqForm true "添加Region表单"
 // @Success 200  {object} response.Response
 // @Failure 500  {object} response.Response
-// @router /api/v1/user/add [post]
-func (ct *CtrlUser) AddOne(c *gin.Context) {
+// @router /api/v1/region/add [post]
+func (ct *CtrlRegion) AddOne(c *gin.Context) {
 	var (
-		req  = &srv_user.AddUserReqForm{}
+		req  = &srv_region.AddRegionReqForm{}
 		data interface{}
 		code = response.CodeFail
 		err  error
@@ -39,27 +39,27 @@ func (ct *CtrlUser) AddOne(c *gin.Context) {
 	if err = c.ShouldBind(req); err != nil {
 		return
 	}
-	if data, err = srv_user.AddUserOne(req); err != nil {
+	if data, err = srv_region.AddRegionOne(req); err != nil {
 		return
 	}
 
 }
 
-// AddList add User list record
-// @tags User
-// @Summary add User list record
-// @Description add User list record
+// AddList add Region list record
+// @tags Region
+// @Summary add Region list record
+// @Description add Region list record
 // @Accept json
 // @Produce json
-// @Param  {} body srv_user.UserBatchForm true "添加User表单列表"
+// @Param  {} body srv_region.RegionBatchForm true "添加Region表单列表"
 // @Success 200  {object} response.Response
 // @Failure 500  {object} response.Response
-// @router /api/v1/user/addList [post]
-func (ct *CtrlUser) AddList(c *gin.Context) {
+// @router /api/v1/region/addList [post]
+func (ct *CtrlRegion) AddList(c *gin.Context) {
 	var (
 		data interface{}
 		code = response.CodeFail
-		req  srv_user.UserBatchForm
+		req  srv_region.RegionBatchForm
 		err  error
 	)
 	defer func() {
@@ -74,25 +74,25 @@ func (ct *CtrlUser) AddList(c *gin.Context) {
 		return
 	}
 
-	if data, err = srv_user.AddUserBatch(req); err != nil {
+	if data, err = srv_region.AddRegionBatch(req); err != nil {
 		return
 	}
 }
 
-// Edit edit User one record
-// @tags User
-// @Summary edit User one record
-// @Description edit User one record
+// Edit edit Region one record
+// @tags Region
+// @Summary edit Region one record
+// @Description edit Region one record
 // @Accept json
 // @Produce json
-// @Param  {} body srv_user.EditUserReqForm true "编辑User表单"
+// @Param  {} body srv_region.EditRegionReqForm true "编辑Region表单"
 // @Success 200  {object} response.Response
 // @Failure 500  {object} response.Response
-// @router /api/v1/user/edit [put]
-func (ct *CtrlUser) Edit(c *gin.Context) {
+// @router /api/v1/region/edit [put]
+func (ct *CtrlRegion) Edit(c *gin.Context) {
 	var (
 		data interface{}
-		req  = new(srv_user.EditUserReqForm)
+		req  = new(srv_region.EditRegionReqForm)
 		err  error
 		code = response.CodeFail
 	)
@@ -106,22 +106,22 @@ func (ct *CtrlUser) Edit(c *gin.Context) {
 	if err = c.ShouldBind(&req); err != nil {
 		return
 	}
-	if data, err = srv_user.EditUserOne(req); err != nil {
+	if data, err = srv_region.EditRegionOne(req); err != nil {
 		return
 	}
 }
 
-// GetOne get User one record
-// @tags User
-// @Summary get User one record
-// @Description get User one record
+// GetOne get Region one record
+// @tags Region
+// @Summary get Region one record
+// @Description get Region one record
 // @Accept json
 // @Produce json
-// @Param id query string true "User ID"
+// @Param id query string true "Region ID"
 // @Success 200  {object} response.Response
 // @Failure 500  {object} response.Response
-// @router /api/v1/user/get  [get]
-func (ct *CtrlUser) GetOne(c *gin.Context) {
+// @router /api/v1/region/get  [get]
+func (ct *CtrlRegion) GetOne(c *gin.Context) {
 	var (
 		data interface{}
 		id   string
@@ -136,25 +136,25 @@ func (ct *CtrlUser) GetOne(c *gin.Context) {
 		}
 	}()
 	id = c.Query("id")
-	if data, err = srv_user.GetUserOne(id); err != nil {
+	if data, err = srv_region.GetRegionOne(id); err != nil {
 		return
 	}
 }
 
-// GetList get User list record
-// @tags User
-// @Summary get User list record
-// @Description get User list record
+// GetList get Region list record
+// @tags Region
+// @Summary get Region list record
+// @Description get Region list record
 // @Accept json
 // @Produce json
-// @Param {} query model_user.QueryUserForm true "获取User列表form"
+// @Param {} query model_region.QueryRegionForm true "获取Region列表form"
 // @Success 200  {object} response.Response
 // @Failure 500  {object} response.Response
-// @router /api/v1/user/list  [get]
-func (ct *CtrlUser) GetList(c *gin.Context) {
+// @router /api/v1/region/list  [get]
+func (ct *CtrlRegion) GetList(c *gin.Context) {
 	var (
 		data interface{}
-		req  = new(model_user.QueryUserForm)
+		req  = new(model_region.QueryRegionForm)
 		err  error
 		code = response.CodeFail
 	)
@@ -168,22 +168,22 @@ func (ct *CtrlUser) GetList(c *gin.Context) {
 	if err = c.ShouldBindQuery(req); err != nil {
 		return
 	}
-	if data, err = srv_user.GetUserPage(req); err != nil {
+	if data, err = srv_region.GetRegionPage(req); err != nil {
 		return
 	}
 }
 
-// DeleteOne delete User one record
-// @tags User
-// @Summary delete User one record
-// @Description delete User one record
+// DeleteOne delete Region one record
+// @tags Region
+// @Summary delete Region one record
+// @Description delete Region one record
 // @Accept json
 // @Produce json
-// @Param id body string true "User ID"
+// @Param id body string true "Region ID"
 // @Success 200  {object} response.Response
 // @Failure 500  {object} response.Response
-// @router  /api/v1/user/delete [delete]
-func (ct *CtrlUser) DeleteOne(c *gin.Context) {
+// @router  /api/v1/region/delete [delete]
+func (ct *CtrlRegion) DeleteOne(c *gin.Context) {
 	var (
 		data interface{}
 		err  error
@@ -200,22 +200,22 @@ func (ct *CtrlUser) DeleteOne(c *gin.Context) {
 	if err = c.ShouldBind(&id); err != nil {
 		return
 	}
-	if err = srv_user.DeleteUserOne(id); err != nil {
+	if err = srv_region.DeleteRegionOne(id); err != nil {
 		return
 	}
 }
 
-// DeleteList delete User list record
-// @tags User
-// @Summary delete User list record
-// @Description delete User list record
+// DeleteList delete Region list record
+// @tags Region
+// @Summary delete Region list record
+// @Description delete Region list record
 // @Accept json
 // @Produce json
-// @Param ids body []string true "User ID list"
+// @Param ids body []string true "Region ID list"
 // @Success 200  {object} response.Response
 // @Failure 500  {object} response.Response
-// @router  /api/v1/user/deleteList [delete]
-func (ct *CtrlUser) DeleteList(c *gin.Context) {
+// @router  /api/v1/region/deleteList [delete]
+func (ct *CtrlRegion) DeleteList(c *gin.Context) {
 	var (
 		data interface{}
 		ids  []string
@@ -232,7 +232,7 @@ func (ct *CtrlUser) DeleteList(c *gin.Context) {
 	if err = c.ShouldBind(&ids); err != nil {
 		return
 	}
-	if err = srv_user.DeleteUserBatch(ids); err != nil {
+	if err = srv_region.DeleteRegionBatch(ids); err != nil {
 		return
 	}
 }

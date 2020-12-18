@@ -263,13 +263,361 @@
                 "summary": "get Admin list record",
                 "parameters": [
                     {
-                        "description": "获取Admin列表form",
+                        "type": "string",
+                        "description": "if required, add binding:\"required\" to tag by self",
+                        "name": "class",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "if required, add binding:\"required\" to tag by self",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "name": "order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "pageNum",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "name": "pageSize",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/region/add": {
+            "post": {
+                "description": "add Region one record",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Region"
+                ],
+                "summary": "add Region one record",
+                "parameters": [
+                    {
+                        "description": "添加Region表单",
                         "name": "{}",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model_admin.QueryAdminForm"
+                            "$ref": "#/definitions/srv_region.AddRegionReqForm"
                         }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/region/addList": {
+            "post": {
+                "description": "add Region list record",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Region"
+                ],
+                "summary": "add Region list record",
+                "parameters": [
+                    {
+                        "description": "添加Region表单列表",
+                        "name": "{}",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/srv_region.AddRegionReqForm"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/region/delete": {
+            "delete": {
+                "description": "delete Region one record",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Region"
+                ],
+                "summary": "delete Region one record",
+                "parameters": [
+                    {
+                        "description": "Region ID",
+                        "name": "id",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/region/deleteList": {
+            "delete": {
+                "description": "delete Region list record",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Region"
+                ],
+                "summary": "delete Region list record",
+                "parameters": [
+                    {
+                        "description": "Region ID list",
+                        "name": "ids",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/region/edit": {
+            "put": {
+                "description": "edit Region one record",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Region"
+                ],
+                "summary": "edit Region one record",
+                "parameters": [
+                    {
+                        "description": "编辑Region表单",
+                        "name": "{}",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/srv_region.EditRegionReqForm"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/region/get": {
+            "get": {
+                "description": "get Region one record",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Region"
+                ],
+                "summary": "get Region one record",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Region ID",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/region/list": {
+            "get": {
+                "description": "get Region list record",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Region"
+                ],
+                "summary": "get Region list record",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "if required, add binding:\"required\" to tag by self",
+                        "name": "cname",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "if required, add binding:\"required\" to tag by self",
+                        "name": "latitude",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "if required, add binding:\"required\" to tag by self",
+                        "name": "longitude",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "if required, add binding:\"required\" to tag by self",
+                        "name": "lowerName",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "if required, add binding:\"required\" to tag by self",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "name": "order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "pageNum",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "name": "pageSize",
+                        "in": "query",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -547,13 +895,30 @@
                 "summary": "get User list record",
                 "parameters": [
                     {
-                        "description": "获取User列表form",
-                        "name": "{}",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/model_user.QueryUserForm"
-                        }
+                        "type": "string",
+                        "description": "if required, add binding:\"required\" to tag by self",
+                        "name": "class",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "name": "order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "pageNum",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "name": "pageSize",
+                        "in": "query",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -574,47 +939,6 @@
         }
     },
     "definitions": {
-        "model_admin.QueryAdminForm": {
-            "type": "object",
-            "required": [
-                "pageNum",
-                "pageSize"
-            ],
-            "properties": {
-                "age": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "$ref": "#/definitions/model_common.FieldData"
-                },
-                "class": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "$ref": "#/definitions/model_common.FieldData"
-                },
-                "createdAt": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "$ref": "#/definitions/model_common.FieldData"
-                },
-                "name": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "$ref": "#/definitions/model_common.FieldData"
-                },
-                "order": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "pageNum": {
-                    "type": "integer"
-                },
-                "pageSize": {
-                    "type": "integer"
-                },
-                "updatedAt": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "$ref": "#/definitions/model_common.FieldData"
-                }
-            }
-        },
         "model_common.FieldData": {
             "type": "object",
             "properties": {
@@ -623,47 +947,6 @@
                 },
                 "value": {
                     "type": "object"
-                }
-            }
-        },
-        "model_user.QueryUserForm": {
-            "type": "object",
-            "required": [
-                "pageNum",
-                "pageSize"
-            ],
-            "properties": {
-                "age": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "$ref": "#/definitions/model_common.FieldData"
-                },
-                "class": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "$ref": "#/definitions/model_common.FieldData"
-                },
-                "createdAt": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "$ref": "#/definitions/model_common.FieldData"
-                },
-                "name": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "$ref": "#/definitions/model_common.FieldData"
-                },
-                "order": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "pageNum": {
-                    "type": "integer"
-                },
-                "pageSize": {
-                    "type": "integer"
-                },
-                "updatedAt": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "$ref": "#/definitions/model_common.FieldData"
                 }
             }
         },
@@ -721,6 +1004,62 @@
                 },
                 "id": {
                     "type": "integer"
+                },
+                "name": {
+                    "description": "if required, add binding:\"required\" to tag by self",
+                    "type": "string"
+                }
+            }
+        },
+        "srv_region.AddRegionReqForm": {
+            "type": "object",
+            "properties": {
+                "cname": {
+                    "description": "if required, add binding:\"required\" to tag by self",
+                    "type": "string"
+                },
+                "latitude": {
+                    "description": "if required, add binding:\"required\" to tag by self",
+                    "type": "string"
+                },
+                "longitude": {
+                    "description": "if required, add binding:\"required\" to tag by self",
+                    "type": "string"
+                },
+                "lowerName": {
+                    "description": "if required, add binding:\"required\" to tag by self",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "if required, add binding:\"required\" to tag by self",
+                    "type": "string"
+                }
+            }
+        },
+        "srv_region.EditRegionReqForm": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "cname": {
+                    "description": "if required, add binding:\"required\" to tag by self",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "latitude": {
+                    "description": "if required, add binding:\"required\" to tag by self",
+                    "type": "string"
+                },
+                "longitude": {
+                    "description": "if required, add binding:\"required\" to tag by self",
+                    "type": "string"
+                },
+                "lowerName": {
+                    "description": "if required, add binding:\"required\" to tag by self",
+                    "type": "string"
                 },
                 "name": {
                     "description": "if required, add binding:\"required\" to tag by self",
