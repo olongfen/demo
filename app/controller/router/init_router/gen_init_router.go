@@ -10,6 +10,7 @@ import (
 	"github.com/olongfen/demo/app/controller/common"
 	"github.com/olongfen/demo/app/controller/middleware"
 	_ "github.com/olongfen/demo/app/controller/router/admin"
+	_ "github.com/olongfen/demo/app/controller/router/demo"
 	_ "github.com/olongfen/demo/app/controller/router/region"
 	_ "github.com/olongfen/demo/app/controller/router/user"
 	"github.com/olongfen/demo/app/setting"

@@ -6,6 +6,7 @@ import (
 	"github.com/olongfen/contrib/log"
 	_ "github.com/olongfen/demo/app/model/admin"
 	"github.com/olongfen/demo/app/model/common"
+	_ "github.com/olongfen/demo/app/model/demo"
 	_ "github.com/olongfen/demo/app/model/region"
 	_ "github.com/olongfen/demo/app/model/user"
 	"github.com/olongfen/demo/app/setting"

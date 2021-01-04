@@ -2,7 +2,7 @@ package main
 
 import "gorm.io/gorm"
 
-//go:generate gengo  -i ./gen.go -output . -m github.com/olongfen/demo
+//go:generate gengo  -i ./gen.go -o . -m github.com/olongfen/demo
 type User struct {
 	gorm.Model
 	Name  string `grom:"unique_index"`
@@ -24,4 +24,11 @@ type Region struct {
 	LowerName string `json:"lowerName" gorm:"type:varchar(64)"`       //
 	Longitude string `json:"longitude" gorm:"type:varchar(12);index"` // 经度
 	Latitude  string `json:"latitude" gorm:"type:varchar(12);index"`  // 纬度
+}
+
+type Demo struct {
+	gorm.Model
+	Name  string
+	Age   int
+	Class string
 }

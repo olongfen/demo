@@ -132,8 +132,13 @@ func GetRegionPage(req *model_region.QueryRegionForm) (ret []*model_region.Regio
 // GetRegionOne get Region
 func GetRegionOne(in string) (ret *model_region.Region, err error) {
 	var (
-		id, _ = strconv.Atoi(in)
-		d     = model_region.NewRegion().SetQueryByID(int64(id))
+		id int64
+	)
+	if id, err = strconv.ParseInt(in, 10, 64); err != nil {
+		return
+	}
+	var (
+		d = model_region.NewRegion().SetQueryByID(int64(id))
 	)
 	if err = d.GetByID(); err != nil {
 		return
@@ -145,10 +150,14 @@ func GetRegionOne(in string) (ret *model_region.Region, err error) {
 
 // DeleteRegionOne delete Region
 func DeleteRegionOne(in string) (err error) {
-
 	var (
-		id, _ = strconv.Atoi(in)
-		d     = model_region.NewRegion().SetQueryByID(int64(id))
+		id int64
+	)
+	if id, err = strconv.ParseInt(in, 10, 64); err != nil {
+		return
+	}
+	var (
+		d = model_region.NewRegion().SetQueryByID(int64(id))
 	)
 	// if needed todo add you business logic code
 	return d.DeleteByID()

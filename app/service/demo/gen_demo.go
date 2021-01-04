@@ -1,35 +1,35 @@
-package srv_admin
+package srv_demo
 
 import (
 	"github.com/mitchellh/mapstructure"
-	"github.com/olongfen/demo/app/model/admin"
+	"github.com/olongfen/demo/app/model/demo"
 	"strconv"
 )
 
-// AddAdminReqForm
-type AddAdminReqForm struct {
+// AddDemoReqForm
+type AddDemoReqForm struct {
 	Name  string `json:"name" form:"name"`   // if required, add binding:"required" to tag by self
 	Age   int    `json:"age" form:"age"`     // if required, add binding:"required" to tag by self
 	Class string `json:"class" form:"class"` // if required, add binding:"required" to tag by self
 }
 
-func (a *AddAdminReqForm) Valid() (err error) {
+func (a *AddDemoReqForm) Valid() (err error) {
 	return
 }
 
-// EditAdminReqForm
-type EditAdminReqForm struct {
+// EditDemoReqForm
+type EditDemoReqForm struct {
 	ID    int64   `json:"id" form:"id" binding:"required"`
 	Name  *string `json:"name" form:"name"`   // if required, add binding:"required" to tag by self
 	Age   *int    `json:"age" form:"age"`     // if required, add binding:"required" to tag by self
 	Class *string `json:"class" form:"class"` // if required, add binding:"required" to tag by self
 }
 
-func (a *EditAdminReqForm) Valid() (err error) {
+func (a *EditDemoReqForm) Valid() (err error) {
 	return
 }
 
-func (a *EditAdminReqForm) ToMAP() (ret map[string]interface{}) {
+func (a *EditDemoReqForm) ToMAP() (ret map[string]interface{}) {
 	ret = make(map[string]interface{}, 0)
 	if a.Name != nil {
 		ret["name"] = *a.Name
@@ -43,13 +43,13 @@ func (a *EditAdminReqForm) ToMAP() (ret map[string]interface{}) {
 	return
 }
 
-// AddAdminOne add
-func AddAdminOne(req *AddAdminReqForm) (ret *model_admin.Admin, err error) {
+// AddDemoOne add
+func AddDemoOne(req *AddDemoReqForm) (ret *model_demo.Demo, err error) {
 	if err = req.Valid(); err != nil {
 		return
 	}
 	var (
-		data = new(model_admin.Admin)
+		data = new(model_demo.Demo)
 	)
 	if err = mapstructure.Decode(req, data); err != nil {
 		return
@@ -65,18 +65,18 @@ func AddAdminOne(req *AddAdminReqForm) (ret *model_admin.Admin, err error) {
 	return
 }
 
-type AdminBatchForm []*AddAdminReqForm
+type DemoBatchForm []*AddDemoReqForm
 
-// AddAdminBatch add Admin
-func AddAdminBatch(req AdminBatchForm) (ret []*model_admin.Admin, err error) {
+// AddDemoBatch add Demo
+func AddDemoBatch(req DemoBatchForm) (ret []*model_demo.Demo, err error) {
 	var (
-		datas []*model_admin.Admin
+		datas []*model_demo.Demo
 	)
 	if err = mapstructure.Decode(req, &datas); err != nil {
 		return
 	}
 	// if needed todo add you business logic code
-	if err = model_admin.AddAdminBatch(datas); err != nil {
+	if err = model_demo.AddDemoBatch(datas); err != nil {
 		return
 	}
 	//
@@ -84,13 +84,13 @@ func AddAdminBatch(req AdminBatchForm) (ret []*model_admin.Admin, err error) {
 	return
 }
 
-// EditAdminOne edit
-func EditAdminOne(req *EditAdminReqForm) (ret *model_admin.Admin, err error) {
+// EditDemoOne edit
+func EditDemoOne(req *EditDemoReqForm) (ret *model_demo.Demo, err error) {
 	if err = req.Valid(); err != nil {
 		return
 	}
 	var (
-		data = model_admin.NewAdmin()
+		data = model_demo.NewDemo()
 	)
 	// if needed todo add you business logic code code
 
@@ -103,14 +103,14 @@ func EditAdminOne(req *EditAdminReqForm) (ret *model_admin.Admin, err error) {
 	return
 }
 
-// GetAdminPage get page Admin data
-func GetAdminPage(req *model_admin.QueryAdminForm) (ret []*model_admin.Admin, err error) {
+// GetDemoPage get page Demo data
+func GetDemoPage(req *model_demo.QueryDemoForm) (ret []*model_demo.Demo, err error) {
 	var (
-		datas []*model_admin.Admin
+		datas []*model_demo.Demo
 	)
 	// if needed todo add you business logic code code
 
-	if datas, err = model_admin.GetAdminList(req); err != nil {
+	if datas, err = model_demo.GetDemoList(req); err != nil {
 		return
 	}
 
@@ -119,8 +119,8 @@ func GetAdminPage(req *model_admin.QueryAdminForm) (ret []*model_admin.Admin, er
 	return
 }
 
-// GetAdminOne get Admin
-func GetAdminOne(in string) (ret *model_admin.Admin, err error) {
+// GetDemoOne get Demo
+func GetDemoOne(in string) (ret *model_demo.Demo, err error) {
 	var (
 		id int64
 	)
@@ -128,7 +128,7 @@ func GetAdminOne(in string) (ret *model_admin.Admin, err error) {
 		return
 	}
 	var (
-		d = model_admin.NewAdmin().SetQueryByID(uint(id))
+		d = model_demo.NewDemo().SetQueryByID(uint(id))
 	)
 	if err = d.GetByID(); err != nil {
 		return
@@ -138,8 +138,8 @@ func GetAdminOne(in string) (ret *model_admin.Admin, err error) {
 	return
 }
 
-// DeleteAdminOne delete Admin
-func DeleteAdminOne(in string) (err error) {
+// DeleteDemoOne delete Demo
+func DeleteDemoOne(in string) (err error) {
 	var (
 		id int64
 	)
@@ -147,14 +147,14 @@ func DeleteAdminOne(in string) (err error) {
 		return
 	}
 	var (
-		d = model_admin.NewAdmin().SetQueryByID(uint(id))
+		d = model_demo.NewDemo().SetQueryByID(uint(id))
 	)
 	// if needed todo add you business logic code
 	return d.DeleteByID()
 }
 
-// DeleteAdminBatch delete Admin
-func DeleteAdminBatch(ids []string) (err error) {
+// DeleteDemoBatch delete Demo
+func DeleteDemoBatch(ids []string) (err error) {
 	// if needed todo add you business logic code
-	return model_admin.DeleteAdminBatch(ids)
+	return model_demo.DeleteDemoBatch(ids)
 }

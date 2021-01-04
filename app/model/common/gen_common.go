@@ -1,6 +1,7 @@
 package model_common
 
 import (
+	"github.com/gin-gonic/gin"
 	"github.com/olongfen/contrib/log"
 	"gorm.io/gorm"
 )

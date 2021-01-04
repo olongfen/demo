@@ -48,6 +48,34 @@ definitions:
     required:
     - id
     type: object
+  srv_demo.AddDemoReqForm:
+    properties:
+      age:
+        description: if required, add binding:"required" to tag by self
+        type: integer
+      class:
+        description: if required, add binding:"required" to tag by self
+        type: string
+      name:
+        description: if required, add binding:"required" to tag by self
+        type: string
+    type: object
+  srv_demo.EditDemoReqForm:
+    properties:
+      age:
+        description: if required, add binding:"required" to tag by self
+        type: integer
+      class:
+        description: if required, add binding:"required" to tag by self
+        type: string
+      id:
+        type: integer
+      name:
+        description: if required, add binding:"required" to tag by self
+        type: string
+    required:
+    - id
+    type: object
   srv_region.AddRegionReqForm:
     properties:
       cname:
@@ -319,6 +347,206 @@ paths:
       summary: get Admin list record
       tags:
       - Admin
+  /api/v1/demo/add:
+    post:
+      consumes:
+      - application/json
+      description: add Demo one record
+      parameters:
+      - description: 添加Demo表单
+        in: body
+        name: '{}'
+        required: true
+        schema:
+          $ref: '#/definitions/srv_demo.AddDemoReqForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: add Demo one record
+      tags:
+      - Demo
+  /api/v1/demo/addList:
+    post:
+      consumes:
+      - application/json
+      description: add Demo list record
+      parameters:
+      - description: 添加Demo表单列表
+        in: body
+        name: '{}'
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/srv_demo.AddDemoReqForm'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: add Demo list record
+      tags:
+      - Demo
+  /api/v1/demo/delete:
+    delete:
+      consumes:
+      - application/json
+      description: delete Demo one record
+      parameters:
+      - description: Demo ID
+        in: body
+        name: id
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: delete Demo one record
+      tags:
+      - Demo
+  /api/v1/demo/deleteList:
+    delete:
+      consumes:
+      - application/json
+      description: delete Demo list record
+      parameters:
+      - description: Demo ID list
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: delete Demo list record
+      tags:
+      - Demo
+  /api/v1/demo/edit:
+    put:
+      consumes:
+      - application/json
+      description: edit Demo one record
+      parameters:
+      - description: 编辑Demo表单
+        in: body
+        name: '{}'
+        required: true
+        schema:
+          $ref: '#/definitions/srv_demo.EditDemoReqForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: edit Demo one record
+      tags:
+      - Demo
+  /api/v1/demo/get:
+    get:
+      consumes:
+      - application/json
+      description: get Demo one record
+      parameters:
+      - description: Demo ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: get Demo one record
+      tags:
+      - Demo
+  /api/v1/demo/list:
+    get:
+      consumes:
+      - application/json
+      description: get Demo list record
+      parameters:
+      - description: if required, add binding:"required" to tag by self
+        in: query
+        name: class
+        type: string
+      - description: if required, add binding:"required" to tag by self
+        in: query
+        name: name
+        type: string
+      - in: query
+        items:
+          type: string
+        name: order
+        type: array
+      - in: query
+        name: pageNum
+        required: true
+        type: integer
+      - in: query
+        name: pageSize
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: get Demo list record
+      tags:
+      - Demo
   /api/v1/region/add:
     post:
       consumes:

@@ -122,8 +122,13 @@ func GetUserPage(req *model_user.QueryUserForm) (ret []*model_user.User, err err
 // GetUserOne get User
 func GetUserOne(in string) (ret *model_user.User, err error) {
 	var (
-		id, _ = strconv.Atoi(in)
-		d     = model_user.NewUser().SetQueryByID(uint(id))
+		id int64
+	)
+	if id, err = strconv.ParseInt(in, 10, 64); err != nil {
+		return
+	}
+	var (
+		d = model_user.NewUser().SetQueryByID(uint(id))
 	)
 	if err = d.GetByID(); err != nil {
 		return
@@ -135,10 +140,14 @@ func GetUserOne(in string) (ret *model_user.User, err error) {
 
 // DeleteUserOne delete User
 func DeleteUserOne(in string) (err error) {
-
 	var (
-		id, _ = strconv.Atoi(in)
-		d     = model_user.NewUser().SetQueryByID(uint(id))
+		id int64
+	)
+	if id, err = strconv.ParseInt(in, 10, 64); err != nil {
+		return
+	}
+	var (
+		d = model_user.NewUser().SetQueryByID(uint(id))
 	)
 	// if needed todo add you business logic code
 	return d.DeleteByID()

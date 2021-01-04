@@ -1,7 +1,6 @@
 package ctrl_common
 
 import (
-	"github.com/gin-gonic/gin"
 	"github.com/olongfen/contrib/log"
 	"github.com/olongfen/demo/app/setting"
 )
