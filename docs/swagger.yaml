@@ -1,10 +1,80 @@
 definitions:
-  model_common.FieldData:
+  form.CreateProjectBusinessIndicatorForm:
     properties:
-      symbol:
+      age:
+        description: age
+        type: integer
+      change:
+        description: change
         type: string
-      value:
+      facilities:
+        description: facilities
+        type: string
+      issue:
+        description: issue
+        type: string
+      projectCode:
+        description: projectCode
+        type: string
+      qualitativeDescription:
+        description: qualitativeDescription
+        type: string
+      quantitativeAssessment:
+        description: quantitativeAssessment
+        type: string
+    required:
+    - projectCode
+    type: object
+  form.CreateUserForm:
+    properties:
+      name:
+        description: name
+        type: string
+      uid:
+        description: uid
+        type: string
+    type: object
+  form.UpProjectBusinessIndicatorForm:
+    properties:
+      age:
+        description: age
+        type: integer
+      change:
+        description: change
+        type: string
+      facilities:
+        description: facilities
+        type: string
+      issue:
+        description: issue
+        type: string
+      projectCode:
+        description: projectCode
+        type: string
+      qualitativeDescription:
+        description: qualitativeDescription
+        type: string
+      quantitativeAssessment:
+        description: quantitativeAssessment
+        type: string
+    type: object
+  form.UpUserForm:
+    properties:
+      name:
+        description: name
+        type: string
+      uid:
+        description: uid
+        type: string
+    type: object
+  response.ErrMsgData:
+    properties:
+      details:
         type: object
+      errCode:
+        type: integer
+      errMsg:
+        type: string
     type: object
   response.Meta:
     additionalProperties: true
@@ -15,150 +85,59 @@ definitions:
         type: integer
       data:
         type: object
+      error:
+        $ref: '#/definitions/response.ErrMsgData'
       message:
         type: string
       meta:
         $ref: '#/definitions/response.Meta'
     type: object
-  srv_admin.AddAdminReqForm:
-    properties:
-      age:
-        description: if required, add binding:"required" to tag by self
-        type: integer
-      class:
-        description: if required, add binding:"required" to tag by self
-        type: string
-      name:
-        description: if required, add binding:"required" to tag by self
-        type: string
-    type: object
-  srv_admin.EditAdminReqForm:
-    properties:
-      age:
-        description: if required, add binding:"required" to tag by self
-        type: integer
-      class:
-        description: if required, add binding:"required" to tag by self
-        type: string
-      id:
-        type: integer
-      name:
-        description: if required, add binding:"required" to tag by self
-        type: string
-    required:
-    - id
-    type: object
-  srv_demo.AddDemoReqForm:
-    properties:
-      age:
-        description: if required, add binding:"required" to tag by self
-        type: integer
-      class:
-        description: if required, add binding:"required" to tag by self
-        type: string
-      name:
-        description: if required, add binding:"required" to tag by self
-        type: string
-    type: object
-  srv_demo.EditDemoReqForm:
-    properties:
-      age:
-        description: if required, add binding:"required" to tag by self
-        type: integer
-      class:
-        description: if required, add binding:"required" to tag by self
-        type: string
-      id:
-        type: integer
-      name:
-        description: if required, add binding:"required" to tag by self
-        type: string
-    required:
-    - id
-    type: object
-  srv_region.AddRegionReqForm:
-    properties:
-      cname:
-        description: if required, add binding:"required" to tag by self
-        type: string
-      latitude:
-        description: if required, add binding:"required" to tag by self
-        type: string
-      longitude:
-        description: if required, add binding:"required" to tag by self
-        type: string
-      lowerName:
-        description: if required, add binding:"required" to tag by self
-        type: string
-      name:
-        description: if required, add binding:"required" to tag by self
-        type: string
-    type: object
-  srv_region.EditRegionReqForm:
-    properties:
-      cname:
-        description: if required, add binding:"required" to tag by self
-        type: string
-      id:
-        type: integer
-      latitude:
-        description: if required, add binding:"required" to tag by self
-        type: string
-      longitude:
-        description: if required, add binding:"required" to tag by self
-        type: string
-      lowerName:
-        description: if required, add binding:"required" to tag by self
-        type: string
-      name:
-        description: if required, add binding:"required" to tag by self
-        type: string
-    required:
-    - id
-    type: object
-  srv_user.AddUserReqForm:
-    properties:
-      age:
-        description: if required, add binding:"required" to tag by self
-        type: integer
-      class:
-        description: if required, add binding:"required" to tag by self
-        type: string
-      name:
-        description: if required, add binding:"required" to tag by self
-        type: string
-    type: object
-  srv_user.EditUserReqForm:
-    properties:
-      age:
-        description: if required, add binding:"required" to tag by self
-        type: integer
-      class:
-        description: if required, add binding:"required" to tag by self
-        type: string
-      id:
-        type: integer
-      name:
-        description: if required, add binding:"required" to tag by self
-        type: string
-    required:
-    - id
-    type: object
 info:
   contact: {}
 paths:
-  /api/v1/admin/add:
-    post:
+  /api/v1/project_business_indicators:
+    get:
       consumes:
       - application/json
-      description: add Admin one record
+      description: get ProjectBusinessIndicator batch record
       parameters:
-      - description: 添加Admin表单
-        in: body
-        name: '{}'
-        required: true
-        schema:
-          $ref: '#/definitions/srv_admin.AddAdminReqForm'
+      - description: Facilities
+        in: query
+        name: facilities
+        type: string
+      - description: QualitativeDescription
+        in: query
+        name: qualitativeDescription
+        type: string
+      - description: Issue
+        in: query
+        name: issue
+        type: string
+      - description: QuantitativeAssessment
+        in: query
+        name: quantitativeAssessment
+        type: string
+      - description: Change
+        in: query
+        name: change
+        type: string
+      - description: 'example: ageMap[>]=some value&ageMap[<]=some value; key must
+          be >,>=,<,<=,!=,=,gt,ge,lt,le,ne,eq'
+        in: query
+        name: ageMap
+        type: string
+      - description: 'example: orderMap[column]=desc'
+        in: query
+        name: orderMap
+        type: string
+      - description: page size
+        in: query
+        name: pageSize
+        type: integer
+      - description: page num
+        in: query
+        name: pageNum
+        type: integer
       produces:
       - application/json
       responses:
@@ -170,23 +149,20 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.Response'
-      summary: add Admin one record
+      summary: get ProjectBusinessIndicator batch record
       tags:
-      - Admin
-  /api/v1/admin/addList:
+      - ProjectBusinessIndicator
     post:
       consumes:
       - application/json
-      description: add Admin list record
+      description: create ProjectBusinessIndicator one record
       parameters:
-      - description: 添加Admin表单列表
+      - description: 添加ProjectBusinessIndicator表单
         in: body
         name: '{}'
         required: true
         schema:
-          items:
-            $ref: '#/definitions/srv_admin.AddAdminReqForm'
-          type: array
+          $ref: '#/definitions/form.CreateProjectBusinessIndicatorForm'
       produces:
       - application/json
       responses:
@@ -198,21 +174,20 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.Response'
-      summary: add Admin list record
+      summary: create ProjectBusinessIndicator one record
       tags:
-      - Admin
-  /api/v1/admin/delete:
+      - ProjectBusinessIndicator
+  /api/v1/project_business_indicators/:id:
     delete:
       consumes:
       - application/json
-      description: delete Admin one record
+      description: delete ProjectBusinessIndicator one record
       parameters:
-      - description: Admin ID
-        in: body
+      - description: id
+        in: path
         name: id
         required: true
-        schema:
-          type: string
+        type: string
       produces:
       - application/json
       responses:
@@ -224,16 +199,70 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.Response'
-      summary: delete Admin one record
+      summary: delete ProjectBusinessIndicator one record
       tags:
-      - Admin
-  /api/v1/admin/deleteList:
+      - ProjectBusinessIndicator
+    get:
+      consumes:
+      - application/json
+      description: get ProjectBusinessIndicator one record
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: get ProjectBusinessIndicator one record
+      tags:
+      - ProjectBusinessIndicator
+    put:
+      consumes:
+      - application/json
+      description: edit ProjectBusinessIndicator one record
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: update ProjectBusinessIndicator form
+        in: body
+        name: '{}'
+        required: true
+        schema:
+          $ref: '#/definitions/form.UpProjectBusinessIndicatorForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: edit ProjectBusinessIndicator one record
+      tags:
+      - ProjectBusinessIndicator
+  /api/v1/project_business_indicators/batch:
     delete:
       consumes:
       - application/json
-      description: delete Admin list record
+      description: delete ProjectBusinessIndicator list record
       parameters:
-      - description: Admin ID list
+      - description: ProjectBusinessIndicator id list
         in: body
         name: ids
         required: true
@@ -252,21 +281,22 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.Response'
-      summary: delete Admin list record
+      summary: delete ProjectBusinessIndicator list record
       tags:
-      - Admin
-  /api/v1/admin/edit:
-    put:
+      - ProjectBusinessIndicator
+    post:
       consumes:
       - application/json
-      description: edit Admin one record
+      description: create ProjectBusinessIndicator batch record
       parameters:
-      - description: 编辑Admin表单
+      - description: 添加ProjectBusinessIndicator表单列表
         in: body
         name: '{}'
         required: true
         schema:
-          $ref: '#/definitions/srv_admin.EditAdminReqForm'
+          items:
+            $ref: '#/definitions/form.CreateProjectBusinessIndicatorForm'
+          type: array
       produces:
       - application/json
       responses:
@@ -278,260 +308,30 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.Response'
-      summary: edit Admin one record
+      summary: create ProjectBusinessIndicator batch record
       tags:
-      - Admin
-  /api/v1/admin/get:
+      - ProjectBusinessIndicator
+  /api/v1/users:
     get:
       consumes:
       - application/json
-      description: get Admin one record
+      description: get User batch record
       parameters:
-      - description: Admin ID
+      - description: Uid
         in: query
-        name: id
-        required: true
+        name: uid
         type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/response.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/response.Response'
-      summary: get Admin one record
-      tags:
-      - Admin
-  /api/v1/admin/list:
-    get:
-      consumes:
-      - application/json
-      description: get Admin list record
-      parameters:
-      - description: if required, add binding:"required" to tag by self
-        in: query
-        name: class
-        type: string
-      - description: if required, add binding:"required" to tag by self
+      - description: Name
         in: query
         name: name
         type: string
-      - in: query
-        items:
-          type: string
-        name: order
-        type: array
-      - in: query
-        name: pageNum
-        required: true
-        type: integer
-      - in: query
+      - description: page size
+        in: query
         name: pageSize
-        required: true
         type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/response.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/response.Response'
-      summary: get Admin list record
-      tags:
-      - Admin
-  /api/v1/demo/add:
-    post:
-      consumes:
-      - application/json
-      description: add Demo one record
-      parameters:
-      - description: 添加Demo表单
-        in: body
-        name: '{}'
-        required: true
-        schema:
-          $ref: '#/definitions/srv_demo.AddDemoReqForm'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/response.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/response.Response'
-      summary: add Demo one record
-      tags:
-      - Demo
-  /api/v1/demo/addList:
-    post:
-      consumes:
-      - application/json
-      description: add Demo list record
-      parameters:
-      - description: 添加Demo表单列表
-        in: body
-        name: '{}'
-        required: true
-        schema:
-          items:
-            $ref: '#/definitions/srv_demo.AddDemoReqForm'
-          type: array
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/response.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/response.Response'
-      summary: add Demo list record
-      tags:
-      - Demo
-  /api/v1/demo/delete:
-    delete:
-      consumes:
-      - application/json
-      description: delete Demo one record
-      parameters:
-      - description: Demo ID
-        in: body
-        name: id
-        required: true
-        schema:
-          type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/response.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/response.Response'
-      summary: delete Demo one record
-      tags:
-      - Demo
-  /api/v1/demo/deleteList:
-    delete:
-      consumes:
-      - application/json
-      description: delete Demo list record
-      parameters:
-      - description: Demo ID list
-        in: body
-        name: ids
-        required: true
-        schema:
-          items:
-            type: string
-          type: array
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/response.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/response.Response'
-      summary: delete Demo list record
-      tags:
-      - Demo
-  /api/v1/demo/edit:
-    put:
-      consumes:
-      - application/json
-      description: edit Demo one record
-      parameters:
-      - description: 编辑Demo表单
-        in: body
-        name: '{}'
-        required: true
-        schema:
-          $ref: '#/definitions/srv_demo.EditDemoReqForm'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/response.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/response.Response'
-      summary: edit Demo one record
-      tags:
-      - Demo
-  /api/v1/demo/get:
-    get:
-      consumes:
-      - application/json
-      description: get Demo one record
-      parameters:
-      - description: Demo ID
+      - description: page num
         in: query
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/response.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/response.Response'
-      summary: get Demo one record
-      tags:
-      - Demo
-  /api/v1/demo/list:
-    get:
-      consumes:
-      - application/json
-      description: get Demo list record
-      parameters:
-      - description: if required, add binding:"required" to tag by self
-        in: query
-        name: class
-        type: string
-      - description: if required, add binding:"required" to tag by self
-        in: query
-        name: name
-        type: string
-      - in: query
-        items:
-          type: string
-        name: order
-        type: array
-      - in: query
         name: pageNum
-        required: true
-        type: integer
-      - in: query
-        name: pageSize
-        required: true
         type: integer
       produces:
       - application/json
@@ -544,233 +344,20 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.Response'
-      summary: get Demo list record
+      summary: get User batch record
       tags:
-      - Demo
-  /api/v1/region/add:
+      - User
     post:
       consumes:
       - application/json
-      description: add Region one record
-      parameters:
-      - description: 添加Region表单
-        in: body
-        name: '{}'
-        required: true
-        schema:
-          $ref: '#/definitions/srv_region.AddRegionReqForm'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/response.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/response.Response'
-      summary: add Region one record
-      tags:
-      - Region
-  /api/v1/region/addList:
-    post:
-      consumes:
-      - application/json
-      description: add Region list record
-      parameters:
-      - description: 添加Region表单列表
-        in: body
-        name: '{}'
-        required: true
-        schema:
-          items:
-            $ref: '#/definitions/srv_region.AddRegionReqForm'
-          type: array
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/response.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/response.Response'
-      summary: add Region list record
-      tags:
-      - Region
-  /api/v1/region/delete:
-    delete:
-      consumes:
-      - application/json
-      description: delete Region one record
-      parameters:
-      - description: Region ID
-        in: body
-        name: id
-        required: true
-        schema:
-          type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/response.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/response.Response'
-      summary: delete Region one record
-      tags:
-      - Region
-  /api/v1/region/deleteList:
-    delete:
-      consumes:
-      - application/json
-      description: delete Region list record
-      parameters:
-      - description: Region ID list
-        in: body
-        name: ids
-        required: true
-        schema:
-          items:
-            type: string
-          type: array
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/response.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/response.Response'
-      summary: delete Region list record
-      tags:
-      - Region
-  /api/v1/region/edit:
-    put:
-      consumes:
-      - application/json
-      description: edit Region one record
-      parameters:
-      - description: 编辑Region表单
-        in: body
-        name: '{}'
-        required: true
-        schema:
-          $ref: '#/definitions/srv_region.EditRegionReqForm'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/response.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/response.Response'
-      summary: edit Region one record
-      tags:
-      - Region
-  /api/v1/region/get:
-    get:
-      consumes:
-      - application/json
-      description: get Region one record
-      parameters:
-      - description: Region ID
-        in: query
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/response.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/response.Response'
-      summary: get Region one record
-      tags:
-      - Region
-  /api/v1/region/list:
-    get:
-      consumes:
-      - application/json
-      description: get Region list record
-      parameters:
-      - description: if required, add binding:"required" to tag by self
-        in: query
-        name: cname
-        type: string
-      - description: if required, add binding:"required" to tag by self
-        in: query
-        name: latitude
-        type: string
-      - description: if required, add binding:"required" to tag by self
-        in: query
-        name: longitude
-        type: string
-      - description: if required, add binding:"required" to tag by self
-        in: query
-        name: lowerName
-        type: string
-      - description: if required, add binding:"required" to tag by self
-        in: query
-        name: name
-        type: string
-      - in: query
-        items:
-          type: string
-        name: order
-        type: array
-      - in: query
-        name: pageNum
-        required: true
-        type: integer
-      - in: query
-        name: pageSize
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/response.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/response.Response'
-      summary: get Region list record
-      tags:
-      - Region
-  /api/v1/user/add:
-    post:
-      consumes:
-      - application/json
-      description: add User one record
+      description: create User one record
       parameters:
       - description: 添加User表单
         in: body
         name: '{}'
         required: true
         schema:
-          $ref: '#/definitions/srv_user.AddUserReqForm'
+          $ref: '#/definitions/form.CreateUserForm'
       produces:
       - application/json
       responses:
@@ -782,49 +369,20 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.Response'
-      summary: add User one record
+      summary: create User one record
       tags:
       - User
-  /api/v1/user/addList:
-    post:
-      consumes:
-      - application/json
-      description: add User list record
-      parameters:
-      - description: 添加User表单列表
-        in: body
-        name: '{}'
-        required: true
-        schema:
-          items:
-            $ref: '#/definitions/srv_user.AddUserReqForm'
-          type: array
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/response.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/response.Response'
-      summary: add User list record
-      tags:
-      - User
-  /api/v1/user/delete:
+  /api/v1/users/:id:
     delete:
       consumes:
       - application/json
       description: delete User one record
       parameters:
-      - description: User ID
-        in: body
+      - description: id
+        in: path
         name: id
         required: true
-        schema:
-          type: string
+        type: string
       produces:
       - application/json
       responses:
@@ -839,13 +397,67 @@ paths:
       summary: delete User one record
       tags:
       - User
-  /api/v1/user/deleteList:
+    get:
+      consumes:
+      - application/json
+      description: get User one record
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: get User one record
+      tags:
+      - User
+    put:
+      consumes:
+      - application/json
+      description: edit User one record
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: update User form
+        in: body
+        name: '{}'
+        required: true
+        schema:
+          $ref: '#/definitions/form.UpUserForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: edit User one record
+      tags:
+      - User
+  /api/v1/users/batch:
     delete:
       consumes:
       - application/json
       description: delete User list record
       parameters:
-      - description: User ID list
+      - description: User id list
         in: body
         name: ids
         required: true
@@ -867,18 +479,19 @@ paths:
       summary: delete User list record
       tags:
       - User
-  /api/v1/user/edit:
-    put:
+    post:
       consumes:
       - application/json
-      description: edit User one record
+      description: create User batch record
       parameters:
-      - description: 编辑User表单
+      - description: 添加User表单列表
         in: body
         name: '{}'
         required: true
         schema:
-          $ref: '#/definitions/srv_user.EditUserReqForm'
+          items:
+            $ref: '#/definitions/form.CreateUserForm'
+          type: array
       produces:
       - application/json
       responses:
@@ -890,69 +503,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.Response'
-      summary: edit User one record
-      tags:
-      - User
-  /api/v1/user/get:
-    get:
-      consumes:
-      - application/json
-      description: get User one record
-      parameters:
-      - description: User ID
-        in: query
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/response.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/response.Response'
-      summary: get User one record
-      tags:
-      - User
-  /api/v1/user/list:
-    get:
-      consumes:
-      - application/json
-      description: get User list record
-      parameters:
-      - description: if required, add binding:"required" to tag by self
-        in: query
-        name: class
-        type: string
-      - in: query
-        items:
-          type: string
-        name: order
-        type: array
-      - in: query
-        name: pageNum
-        required: true
-        type: integer
-      - in: query
-        name: pageSize
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/response.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/response.Response'
-      summary: get User list record
+      summary: create User batch record
       tags:
       - User
 swagger: "2.0"

@@ -1,34 +1,19 @@
 package main
 
-import "gorm.io/gorm"
+//go:generate gengo  -i ./gen.go  -m github.com/olongfen/demo -g gen-model
+type ProjectBusinessIndicator struct {
+	ID                     uint   `json:"id" gorm:"primaryKey"`
+	ProjectCode            string `json:"projectCode" gorm:"type:varchar(36);uniqueIndex"`
+	Facilities             string `json:"facilities" gorm:"type:varchar(128)" comment:"主要设备"`
+	QualitativeDescription string `json:"qualitativeDescription" gorm:"type:varchar(256)" comment:"定性描述"`
+	Issue                  string `json:"issue" gorm:"40" comment:"期号"`
+	QuantitativeAssessment string `json:"quantitativeAssessment" gorm:"type:varchar(256)" comment:"定量评估"`
+	Change                 string `json:"change" gorm:"type:varchar(256)" comment:"与上期报告相比的变化"`
+	Age                    int    `json:"age"`
+}
 
-//go:generate gengo  -i ./gen.go -o . -m github.com/olongfen/demo
 type User struct {
-	gorm.Model
-	Name  string `grom:"unique_index"`
-	Age   int
-	Class string
-}
-
-type Admin struct {
-	gorm.Model
-	Name  string
-	Age   int
-	Class string
-}
-
-type Region struct {
-	ID        int64  `json:"id" gorm:"primarykey"`
-	Name      string `json:"name" gorm:"type:varchar(64)"`            //
-	Cname     string `json:"cname" gorm:"type:varchar(64)"`           //
-	LowerName string `json:"lowerName" gorm:"type:varchar(64)"`       //
-	Longitude string `json:"longitude" gorm:"type:varchar(12);index"` // 经度
-	Latitude  string `json:"latitude" gorm:"type:varchar(12);index"`  // 纬度
-}
-
-type Demo struct {
-	gorm.Model
-	Name  string
-	Age   int
-	Class string
+	ID   uint   `json:"id" gorm:"primaryKey"`
+	Uid  string `json:"uid" gorm:"type:varchar(36)"`
+	Name string `json:"name"`
 }

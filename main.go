@@ -10,17 +10,18 @@ import (
 	"time"
 
 	"github.com/olongfen/contrib/log"
+	"github.com/olongfen/demo/app/controller/router"
+	"github.com/olongfen/demo/app/models"
+	"github.com/olongfen/demo/app/setting"
 	"github.com/sirupsen/logrus"
 
-	"github.com/olongfen/demo/app/controller/router/init_router"
-	_ "github.com/olongfen/demo/app/controller/router/init_router"
-	_ "github.com/olongfen/demo/app/model/init_db"
-	"github.com/olongfen/demo/app/setting"
-	_ "github.com/olongfen/demo/app/setting"
 	_ "github.com/olongfen/demo/docs"
 )
 
 func main() {
+	setting.Init()
+	models.Init()
+	router.Init()
 	go func() {
 		// 开启服务
 		s := &http.Server{

@@ -24,9 +24,9 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/v1/admin/add": {
-            "post": {
-                "description": "add Admin one record",
+        "/api/v1/project_business_indicators": {
+            "get": {
+                "description": "get ProjectBusinessIndicator batch record",
                 "consumes": [
                     "application/json"
                 ],
@@ -34,17 +34,100 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Admin"
+                    "ProjectBusinessIndicator"
                 ],
-                "summary": "add Admin one record",
+                "summary": "get ProjectBusinessIndicator batch record",
                 "parameters": [
                     {
-                        "description": "添加Admin表单",
+                        "type": "string",
+                        "description": "Facilities",
+                        "name": "facilities",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "QualitativeDescription",
+                        "name": "qualitativeDescription",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Issue",
+                        "name": "issue",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "QuantitativeAssessment",
+                        "name": "quantitativeAssessment",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Change",
+                        "name": "change",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: ageMap[\u003e]=some value\u0026ageMap[\u003c]=some value; key must be \u003e,\u003e=,\u003c,\u003c=,!=,=,gt,ge,lt,le,ne,eq",
+                        "name": "ageMap",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: orderMap[column]=desc",
+                        "name": "orderMap",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "page size",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "page num",
+                        "name": "pageNum",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "create ProjectBusinessIndicator one record",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ProjectBusinessIndicator"
+                ],
+                "summary": "create ProjectBusinessIndicator one record",
+                "parameters": [
+                    {
+                        "description": "添加ProjectBusinessIndicator表单",
                         "name": "{}",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/srv_admin.AddAdminReqForm"
+                            "$ref": "#/definitions/form.CreateProjectBusinessIndicatorForm"
                         }
                     }
                 ],
@@ -64,9 +147,9 @@ var doc = `{
                 }
             }
         },
-        "/api/v1/admin/addList": {
-            "post": {
-                "description": "add Admin list record",
+        "/api/v1/project_business_indicators/:id": {
+            "get": {
+                "description": "get ProjectBusinessIndicator one record",
                 "consumes": [
                     "application/json"
                 ],
@@ -74,19 +157,138 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Admin"
+                    "ProjectBusinessIndicator"
                 ],
-                "summary": "add Admin list record",
+                "summary": "get ProjectBusinessIndicator one record",
                 "parameters": [
                     {
-                        "description": "添加Admin表单列表",
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "edit ProjectBusinessIndicator one record",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ProjectBusinessIndicator"
+                ],
+                "summary": "edit ProjectBusinessIndicator one record",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "update ProjectBusinessIndicator form",
+                        "name": "{}",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/form.UpProjectBusinessIndicatorForm"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete ProjectBusinessIndicator one record",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ProjectBusinessIndicator"
+                ],
+                "summary": "delete ProjectBusinessIndicator one record",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/project_business_indicators/batch": {
+            "post": {
+                "description": "create ProjectBusinessIndicator batch record",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ProjectBusinessIndicator"
+                ],
+                "summary": "create ProjectBusinessIndicator batch record",
+                "parameters": [
+                    {
+                        "description": "添加ProjectBusinessIndicator表单列表",
                         "name": "{}",
                         "in": "body",
                         "required": true,
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/srv_admin.AddAdminReqForm"
+                                "$ref": "#/definitions/form.CreateProjectBusinessIndicatorForm"
                             }
                         }
                     }
@@ -105,11 +307,9 @@ var doc = `{
                         }
                     }
                 }
-            }
-        },
-        "/api/v1/admin/delete": {
+            },
             "delete": {
-                "description": "delete Admin one record",
+                "description": "delete ProjectBusinessIndicator list record",
                 "consumes": [
                     "application/json"
                 ],
@@ -117,52 +317,12 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Admin"
+                    "ProjectBusinessIndicator"
                 ],
-                "summary": "delete Admin one record",
+                "summary": "delete ProjectBusinessIndicator list record",
                 "parameters": [
                     {
-                        "description": "Admin ID",
-                        "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/admin/deleteList": {
-            "delete": {
-                "description": "delete Admin list record",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "delete Admin list record",
-                "parameters": [
-                    {
-                        "description": "Admin ID list",
+                        "description": "ProjectBusinessIndicator id list",
                         "name": "ids",
                         "in": "body",
                         "required": true,
@@ -190,782 +350,9 @@ var doc = `{
                 }
             }
         },
-        "/api/v1/admin/edit": {
-            "put": {
-                "description": "edit Admin one record",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "edit Admin one record",
-                "parameters": [
-                    {
-                        "description": "编辑Admin表单",
-                        "name": "{}",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/srv_admin.EditAdminReqForm"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/admin/get": {
+        "/api/v1/users": {
             "get": {
-                "description": "get Admin one record",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "get Admin one record",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Admin ID",
-                        "name": "id",
-                        "in": "query",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/admin/list": {
-            "get": {
-                "description": "get Admin list record",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "get Admin list record",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "if required, add binding:\"required\" to tag by self",
-                        "name": "class",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "if required, add binding:\"required\" to tag by self",
-                        "name": "name",
-                        "in": "query"
-                    },
-                    {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "name": "order",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "name": "pageNum",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "name": "pageSize",
-                        "in": "query",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/demo/add": {
-            "post": {
-                "description": "add Demo one record",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Demo"
-                ],
-                "summary": "add Demo one record",
-                "parameters": [
-                    {
-                        "description": "添加Demo表单",
-                        "name": "{}",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/srv_demo.AddDemoReqForm"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/demo/addList": {
-            "post": {
-                "description": "add Demo list record",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Demo"
-                ],
-                "summary": "add Demo list record",
-                "parameters": [
-                    {
-                        "description": "添加Demo表单列表",
-                        "name": "{}",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/srv_demo.AddDemoReqForm"
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/demo/delete": {
-            "delete": {
-                "description": "delete Demo one record",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Demo"
-                ],
-                "summary": "delete Demo one record",
-                "parameters": [
-                    {
-                        "description": "Demo ID",
-                        "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/demo/deleteList": {
-            "delete": {
-                "description": "delete Demo list record",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Demo"
-                ],
-                "summary": "delete Demo list record",
-                "parameters": [
-                    {
-                        "description": "Demo ID list",
-                        "name": "ids",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/demo/edit": {
-            "put": {
-                "description": "edit Demo one record",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Demo"
-                ],
-                "summary": "edit Demo one record",
-                "parameters": [
-                    {
-                        "description": "编辑Demo表单",
-                        "name": "{}",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/srv_demo.EditDemoReqForm"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/demo/get": {
-            "get": {
-                "description": "get Demo one record",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Demo"
-                ],
-                "summary": "get Demo one record",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Demo ID",
-                        "name": "id",
-                        "in": "query",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/demo/list": {
-            "get": {
-                "description": "get Demo list record",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Demo"
-                ],
-                "summary": "get Demo list record",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "if required, add binding:\"required\" to tag by self",
-                        "name": "class",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "if required, add binding:\"required\" to tag by self",
-                        "name": "name",
-                        "in": "query"
-                    },
-                    {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "name": "order",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "name": "pageNum",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "name": "pageSize",
-                        "in": "query",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/region/add": {
-            "post": {
-                "description": "add Region one record",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Region"
-                ],
-                "summary": "add Region one record",
-                "parameters": [
-                    {
-                        "description": "添加Region表单",
-                        "name": "{}",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/srv_region.AddRegionReqForm"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/region/addList": {
-            "post": {
-                "description": "add Region list record",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Region"
-                ],
-                "summary": "add Region list record",
-                "parameters": [
-                    {
-                        "description": "添加Region表单列表",
-                        "name": "{}",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/srv_region.AddRegionReqForm"
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/region/delete": {
-            "delete": {
-                "description": "delete Region one record",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Region"
-                ],
-                "summary": "delete Region one record",
-                "parameters": [
-                    {
-                        "description": "Region ID",
-                        "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/region/deleteList": {
-            "delete": {
-                "description": "delete Region list record",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Region"
-                ],
-                "summary": "delete Region list record",
-                "parameters": [
-                    {
-                        "description": "Region ID list",
-                        "name": "ids",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/region/edit": {
-            "put": {
-                "description": "edit Region one record",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Region"
-                ],
-                "summary": "edit Region one record",
-                "parameters": [
-                    {
-                        "description": "编辑Region表单",
-                        "name": "{}",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/srv_region.EditRegionReqForm"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/region/get": {
-            "get": {
-                "description": "get Region one record",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Region"
-                ],
-                "summary": "get Region one record",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Region ID",
-                        "name": "id",
-                        "in": "query",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/region/list": {
-            "get": {
-                "description": "get Region list record",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Region"
-                ],
-                "summary": "get Region list record",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "if required, add binding:\"required\" to tag by self",
-                        "name": "cname",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "if required, add binding:\"required\" to tag by self",
-                        "name": "latitude",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "if required, add binding:\"required\" to tag by self",
-                        "name": "longitude",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "if required, add binding:\"required\" to tag by self",
-                        "name": "lowerName",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "if required, add binding:\"required\" to tag by self",
-                        "name": "name",
-                        "in": "query"
-                    },
-                    {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "name": "order",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "name": "pageNum",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "name": "pageSize",
-                        "in": "query",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/user/add": {
-            "post": {
-                "description": "add User one record",
+                "description": "get User batch record",
                 "consumes": [
                     "application/json"
                 ],
@@ -975,7 +362,60 @@ var doc = `{
                 "tags": [
                     "User"
                 ],
-                "summary": "add User one record",
+                "summary": "get User batch record",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Uid",
+                        "name": "uid",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Name",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "page size",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "page num",
+                        "name": "pageNum",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "create User one record",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "create User one record",
                 "parameters": [
                     {
                         "description": "添加User表单",
@@ -983,7 +423,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/srv_user.AddUserReqForm"
+                            "$ref": "#/definitions/form.CreateUserForm"
                         }
                     }
                 ],
@@ -1003,173 +443,7 @@ var doc = `{
                 }
             }
         },
-        "/api/v1/user/addList": {
-            "post": {
-                "description": "add User list record",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "User"
-                ],
-                "summary": "add User list record",
-                "parameters": [
-                    {
-                        "description": "添加User表单列表",
-                        "name": "{}",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/srv_user.AddUserReqForm"
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/user/delete": {
-            "delete": {
-                "description": "delete User one record",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "User"
-                ],
-                "summary": "delete User one record",
-                "parameters": [
-                    {
-                        "description": "User ID",
-                        "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/user/deleteList": {
-            "delete": {
-                "description": "delete User list record",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "User"
-                ],
-                "summary": "delete User list record",
-                "parameters": [
-                    {
-                        "description": "User ID list",
-                        "name": "ids",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/user/edit": {
-            "put": {
-                "description": "edit User one record",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "User"
-                ],
-                "summary": "edit User one record",
-                "parameters": [
-                    {
-                        "description": "编辑User表单",
-                        "name": "{}",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/srv_user.EditUserReqForm"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/user/get": {
+        "/api/v1/users/:id": {
             "get": {
                 "description": "get User one record",
                 "consumes": [
@@ -1185,9 +459,90 @@ var doc = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "User ID",
+                        "description": "id",
                         "name": "id",
-                        "in": "query",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "edit User one record",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "edit User one record",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "update User form",
+                        "name": "{}",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/form.UpUserForm"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete User one record",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "delete User one record",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
                         "required": true
                     }
                 ],
@@ -1207,9 +562,9 @@ var doc = `{
                 }
             }
         },
-        "/api/v1/user/list": {
-            "get": {
-                "description": "get User list record",
+        "/api/v1/users/batch": {
+            "post": {
+                "description": "create User batch record",
                 "consumes": [
                     "application/json"
                 ],
@@ -1219,33 +574,60 @@ var doc = `{
                 "tags": [
                     "User"
                 ],
-                "summary": "get User list record",
+                "summary": "create User batch record",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "if required, add binding:\"required\" to tag by self",
-                        "name": "class",
-                        "in": "query"
+                        "description": "添加User表单列表",
+                        "name": "{}",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/form.CreateUserForm"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
                     },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete User list record",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "delete User list record",
+                "parameters": [
                     {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "name": "order",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "name": "pageNum",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "name": "pageSize",
-                        "in": "query",
-                        "required": true
+                        "description": "User id list",
+                        "name": "ids",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
                     }
                 ],
                 "responses": {
@@ -1266,14 +648,112 @@ var doc = `{
         }
     },
     "definitions": {
-        "model_common.FieldData": {
+        "form.CreateProjectBusinessIndicatorForm": {
             "type": "object",
+            "required": [
+                "projectCode"
+            ],
             "properties": {
-                "symbol": {
+                "age": {
+                    "description": "age",
+                    "type": "integer"
+                },
+                "change": {
+                    "description": "change",
                     "type": "string"
                 },
-                "value": {
+                "facilities": {
+                    "description": "facilities",
+                    "type": "string"
+                },
+                "issue": {
+                    "description": "issue",
+                    "type": "string"
+                },
+                "projectCode": {
+                    "description": "projectCode",
+                    "type": "string"
+                },
+                "qualitativeDescription": {
+                    "description": "qualitativeDescription",
+                    "type": "string"
+                },
+                "quantitativeAssessment": {
+                    "description": "quantitativeAssessment",
+                    "type": "string"
+                }
+            }
+        },
+        "form.CreateUserForm": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "name",
+                    "type": "string"
+                },
+                "uid": {
+                    "description": "uid",
+                    "type": "string"
+                }
+            }
+        },
+        "form.UpProjectBusinessIndicatorForm": {
+            "type": "object",
+            "properties": {
+                "age": {
+                    "description": "age",
+                    "type": "integer"
+                },
+                "change": {
+                    "description": "change",
+                    "type": "string"
+                },
+                "facilities": {
+                    "description": "facilities",
+                    "type": "string"
+                },
+                "issue": {
+                    "description": "issue",
+                    "type": "string"
+                },
+                "projectCode": {
+                    "description": "projectCode",
+                    "type": "string"
+                },
+                "qualitativeDescription": {
+                    "description": "qualitativeDescription",
+                    "type": "string"
+                },
+                "quantitativeAssessment": {
+                    "description": "quantitativeAssessment",
+                    "type": "string"
+                }
+            }
+        },
+        "form.UpUserForm": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "name",
+                    "type": "string"
+                },
+                "uid": {
+                    "description": "uid",
+                    "type": "string"
+                }
+            }
+        },
+        "response.ErrMsgData": {
+            "type": "object",
+            "properties": {
+                "details": {
                     "type": "object"
+                },
+                "errCode": {
+                    "type": "integer"
+                },
+                "errMsg": {
+                    "type": "string"
                 }
             }
         },
@@ -1290,187 +770,14 @@ var doc = `{
                 "data": {
                     "type": "object"
                 },
+                "error": {
+                    "$ref": "#/definitions/response.ErrMsgData"
+                },
                 "message": {
                     "type": "string"
                 },
                 "meta": {
                     "$ref": "#/definitions/response.Meta"
-                }
-            }
-        },
-        "srv_admin.AddAdminReqForm": {
-            "type": "object",
-            "properties": {
-                "age": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "type": "integer"
-                },
-                "class": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "type": "string"
-                },
-                "name": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "type": "string"
-                }
-            }
-        },
-        "srv_admin.EditAdminReqForm": {
-            "type": "object",
-            "required": [
-                "id"
-            ],
-            "properties": {
-                "age": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "type": "integer"
-                },
-                "class": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "type": "string"
-                }
-            }
-        },
-        "srv_demo.AddDemoReqForm": {
-            "type": "object",
-            "properties": {
-                "age": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "type": "integer"
-                },
-                "class": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "type": "string"
-                },
-                "name": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "type": "string"
-                }
-            }
-        },
-        "srv_demo.EditDemoReqForm": {
-            "type": "object",
-            "required": [
-                "id"
-            ],
-            "properties": {
-                "age": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "type": "integer"
-                },
-                "class": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "type": "string"
-                }
-            }
-        },
-        "srv_region.AddRegionReqForm": {
-            "type": "object",
-            "properties": {
-                "cname": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "type": "string"
-                },
-                "latitude": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "type": "string"
-                },
-                "longitude": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "type": "string"
-                },
-                "lowerName": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "type": "string"
-                },
-                "name": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "type": "string"
-                }
-            }
-        },
-        "srv_region.EditRegionReqForm": {
-            "type": "object",
-            "required": [
-                "id"
-            ],
-            "properties": {
-                "cname": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "latitude": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "type": "string"
-                },
-                "longitude": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "type": "string"
-                },
-                "lowerName": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "type": "string"
-                },
-                "name": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "type": "string"
-                }
-            }
-        },
-        "srv_user.AddUserReqForm": {
-            "type": "object",
-            "properties": {
-                "age": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "type": "integer"
-                },
-                "class": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "type": "string"
-                },
-                "name": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "type": "string"
-                }
-            }
-        },
-        "srv_user.EditUserReqForm": {
-            "type": "object",
-            "required": [
-                "id"
-            ],
-            "properties": {
-                "age": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "type": "integer"
-                },
-                "class": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "description": "if required, add binding:\"required\" to tag by self",
-                    "type": "string"
                 }
             }
         }
