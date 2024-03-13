@@ -41,7 +41,7 @@ func main() {
 	fmt.Println("获得锁，执行操作")
 	time.Sleep(5 * time.Second)
 
-	fmt.Println("操作完成")
+	fmt.Println("操作完成!")
 }
 
 // 尝试获取锁
