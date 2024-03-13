@@ -1,0 +1,53 @@
+# 判断docker是否已经安装，已经安装就不重复安装了
+- name: Check if Docker is installed
+  shell: "docker --version"
+  register: docker_check
+  ignore_errors: yes
+
+# 输出docker检查结果
+- name: Print Docker check result
+  debug:
+    var: docker_check
+
+# 安装包依赖
+- name: Install required packages
+  package:
+    name:
+      - yum-utils
+      - device-mapper-persistent-data
+      - lvm2
+    state: present
+  when: docker_check is not defined or docker_check.failed
+
+# 添加docker的yum源
+- name: Add Docker repository
+  command: "yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo"
+  when: docker_check is not defined or docker_check.failed
+# 安装docker
+- name: Install Docker
+  package:
+    name: docker-ce
+    state: present
+  when: docker_check is not defined or docker_check.failed
+# 设置docker开机自启动
+- name: Enable Docker
+  command: "systemctl enable docker"
+  when: docker_check is not defined or docker_check.failed
+# 启动docker
+- name: Start Docker
+  command: "systemctl start docker"
+  when: docker_check is not defined or docker_check.failed
+# 复制daemon.json文件
+- include_tasks: config_daemon.yml
+#  when: docker_check is not defined or docker_check.failed
+# 安装docker-compose
+- name: Install Docker Compose
+  get_url:
+    url: "https://github.com/docker/compose/releases/download/v2.24.6/docker-compose-linux-x86_64"
+    dest: /usr/local/bin/docker-compose
+    mode: 0755
+    force: yes
+  when: docker_check is not defined or docker_check.failed
+#  environment:
+#    http_proxy: "http://192.168.3.4:7890"
+#    https_proxy: "http://192.168.3.4:7890"

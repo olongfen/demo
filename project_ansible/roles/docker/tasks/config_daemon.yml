@@ -1,0 +1,5 @@
+- name: Copy daemon.json file
+  copy:
+    src: daemon.json
+    dest: /etc/docker/daemon.json
+  notify: Restart Docker service

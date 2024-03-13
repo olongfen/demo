@@ -1,0 +1,79 @@
+pipeline {
+    agent any
+
+    stages {
+         stage('拉取代码和构建阶段') {
+            when {
+                expression {
+                    return "${action}" == 'build'
+                }
+            }
+            steps {
+                echo "执行pull代码阶段"
+                sh '''
+                    echo "pull代码"
+                    export code_dir="pacific-insurance-api"
+                    if [ -d "$code_dir" ]; then
+                        cd $code_dir
+                        git pull
+                    else
+                        git clone git@e.coding.net:zkxrsz/pacific_insurance/pacific-insurance-api.git
+                        cd $code_dir
+                    fi
+                    pwd
+                    echo "构建代码"
+                    make build
+
+                '''
+                // 在这里添加 build 阶段的操作
+            }
+        }
+        stage('部署测试服务器阶段') {
+            when {
+                expression {
+                    return "${action}" == 'test'
+                }
+            }
+            steps {
+                echo "执行部署测试服阶段"
+                // 在这里添加 deploy 阶段的操作
+            }
+        }
+          stage('Manual Approval') {
+            when {
+                expression {
+                    return "${action}" == 'prod'
+                }
+            }
+            steps {
+                script {
+                    // 等待用户手动确认
+                    def userInput = input(
+                        id: 'manual-approval',
+                        message: 'Do you want to continue?',
+                        parameters: [
+                            string(name: 'CONFIRMATION', defaultValue: '', description: 'Type "YES" to confirm')
+                        ]
+                    )
+
+                    if (userInput == 'YES') {
+                        echo "Continuing with deployment"
+                    } else {
+                        error "User chose to cancel deployment"
+                    }
+                }
+            }
+        }
+        stage('部署线上服务器阶段') {
+            when {
+                expression {
+                    return "${action}" == 'prod'
+                }
+            }
+            steps {
+                echo "执行部署上线阶段"
+                // 在这里添加 deploy 阶段的操作
+            }
+        }
+    }
+}
